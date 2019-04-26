@@ -34,7 +34,7 @@
 * 如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
 * 本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类。数据集压缩文件`n01440764.tar`下载链接: https://pan.baidu.com/s/1NksESNqBX--YqMJ4zptGdw 提取码: 6p3u
 * 本文作者在桌面中创建文件夹`keras_YOLOv3`，并将下载好的数据集压缩文件`n01440764.tar`放到其中，如下图所示：
-![](markdown/image01.png)
+![](markdown_images/image01.png)
 
 在文件夹`keras_YOLOv3`中鼠标右击，在显示的菜单中选择`Open in Terminal`，即在文件夹`keras_YOLOv3`中打开Terminal。
 作为合格的Ubuntu系统使用者，要求会使用终端Terminal中的命令完成操作。

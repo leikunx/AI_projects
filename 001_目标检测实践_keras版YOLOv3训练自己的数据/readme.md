@@ -17,20 +17,20 @@
 
 ### 软件配置要求
 各种软件版本：
-Ubuntu ：16.04
-Anaconda ：5.2
-python ： 3.6
-CUDA ：9.0
-cudnn ：7.3
-tensorflow_gpu ：1.10
-Keras ：2.2.4
+* Ubuntu ：16.04
+* Anaconda ：5.2
+* python ： 3.6
+* CUDA ：9.0
+* cudnn ：7.3
+* tensorflow_gpu ：1.10
+* Keras ：2.2.4
 如果有显存为8G的显卡，在Windows操作系统下也**无法运行**本文下面的代码。会报错"显存不足"。
 所以读者需要安装Ubuntu操作系统，建议选择Ubuntu16.04，制作系统U盘后非常容易安装。
 如果有显存为11G的显卡，在Windows操作系统下可以继续本文下面的实验。
-有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装》，链接：https://www.jianshu.com/p/4ebaa78e0233
+有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《[深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装](https://www.jianshu.com/p/4ebaa78e0233)》，链接：
 
-##1.数据准备
-###1.1 数据下载
+## 1.数据准备
+### 1.1 数据下载
 如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
 本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类。
 数据集压缩文件下载链接: https://pan.baidu.com/s/1NksESNqBX--YqMJ4zptGdw 提取码: 6p3u
@@ -43,7 +43,7 @@ Keras ：2.2.4
 解压完成后，文件夹和终端Terminal中的情况如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-b9e8d85ddca9262e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###1.2 在Ubuntu中安装软件labelImg
+### 1.2 在Ubuntu中安装软件labelImg
 需要使用软件labelImg做图片的数据标注。
 软件labelImg的下载地址：https://github.com/tzutalin/labelImg，页面如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-9b519422f3d4cfbc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -61,7 +61,7 @@ Keras ：2.2.4
 8.运行命令`python labelImg.py`运行代码文件labelImg.py，运行结果如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-9d31fc88c5a8467e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###1.3 获取像素足够的图片
+### 1.3 获取像素足够的图片
 因为文件夹`n01440764`中有一部分图片像素不足416 * 416，不利于模型训练，所以本节内容有必要进行。
 新建一个代码文件generate_qualified_images.py或generate_qualified_images.ipynb，将下面一段代码复制到其中。
 运行代码可以完成2个功能：
@@ -73,14 +73,14 @@ import random
 from PIL import Image
 import shutil
 
-#获取文件夹中的文件路径
+# 获取文件夹中的文件路径
 def getFilePathList(dirPath, partOfFileName=''):
     allFileName_list = list(os.walk(dirPath))[0][2]
     fileName_list = [k for k in allFileName_list if partOfFileName in k]
     filePath_list = [os.path.join(dirPath, k) for k in fileName_list]
     return filePath_list
 
-#获取一部分像素足够，即长，宽都大于416的图片
+# 获取一部分像素足够，即长，宽都大于416的图片
 def generate_qualified_images(dirPath, sample_number, new_dirPath):
     jpgFilePath_list = getFilePathList(dirPath, '.JPEG')
     random.shuffle(jpgFilePath_list)
@@ -97,11 +97,11 @@ def generate_qualified_images(dirPath, sample_number, new_dirPath):
         if i == sample_number:
             break
 
-#获取数量为100的合格样本存放到selected_images文件夹中
+# 获取数量为100的合格样本存放到selected_images文件夹中
 generate_qualified_images('n01440764', 200, 'selected_images')
 ```
 
-###1.4 数据标注 
+### 1.4 数据标注 
 数据标注是一件苦力活，本文作者标记200张图片花费90分钟左右。
 本节演示单张图片的标注。
 如下图红色箭头标记处所示，打开数据集文件夹。
@@ -115,7 +115,7 @@ generate_qualified_images('n01440764', 200, 'selected_images')
 下载链接: https://pan.baidu.com/s/1-bZ5B5JKFB7R6aWUPBdP_w 提取码: 9rjg
 
 
-###1.5 检查标注数据
+### 1.5 检查标注数据
 新建一个代码文件check_annotations.py或check_annotations.ipynb，将下面一段代码复制到其中。
 运行代码可以完成2个功能：
 1.检查代码检查标记好的文件夹是否有图片漏标
@@ -168,7 +168,7 @@ if __name__ == '__main__':
     check_2(dirPath, className_list)
 ```
 
-###1.6 图像压缩
+### 1.6 图像压缩
 预先压缩好图像，模型训练时不用再临时改变图片大小，或许可以加快模型训练速度。
 新建一个代码文件compress_images.py或compress_images.ipynb，将下面一段代码复制到其中。
 运行代码可以完成2个功能：
@@ -257,8 +257,8 @@ if __name__ == '__main__':
 标注好的200张压缩后的图片，上传到百度云盘，便于读者直接复现。
 链接: https://pan.baidu.com/s/1WvLW0xK-1tIQpgxqnigPng 提取码: 24ix
 
-##2.模型训练
-###2.1 下载github上的代码库
+## 2.模型训练
+### 2.1 下载github上的代码库
 下载github上的代码库，链接：https://github.com/StevenLei2017/keras-yolo3
 下载操作如下图所示，点击图中的`Download ZIP`：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-390d0b3a2f128f4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -267,7 +267,7 @@ if __name__ == '__main__':
 上面2步完成后，文件夹`keras_YOLOv3`中示意图如下：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-11874e8432bb268b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###2.2 划分训练集和测试集
+### 2.2 划分训练集和测试集
 1.将文件夹`images_416*416`移动到文件夹`keras-yolo3-master`中，如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-eb850be443b5d9dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 2.打开文件夹`keras-yolo3-master`中的文件夹`model_data`，编辑其中的文件`voc_names.txt`。
@@ -276,7 +276,7 @@ if __name__ == '__main__':
 训练集文件`dataset_train.txt`，测试集文件`dataset_test.txt`，如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-da02b0d5ea84ace2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###2.3 开始训练
+### 2.3 开始训练
 文件夹`keras-yolo3-master`中打开终端Terminal，然后运行命令`python train.py`即可开始训练。
 训练过程如下图所示：
 本文作者的显卡为Nvidia RTX2070，从图中下方红色方框处可以看出每个epoch需要大约15秒，则200个epoch约1个小时能够运行完成。
@@ -284,12 +284,12 @@ if __name__ == '__main__':
 本篇文章模型训练需要较长时间，建议读者将2.3节的内容放到晚上运行。
 调整模型训练的轮次epochs需要修改代码文件`train.py`的第85行fit_generator方法中的参数，即第90行参数epochs的值。
 
-##3.模型测试
+## 3.模型测试
 本文作者训练一晚上，epoch数值为2500，已经训练好的模型权重文件上传到百度网盘。
 如果读者没有完成模型训练，可以先下载本文作者已经训练好的模型权重文件完成本章内容。
 链接: https://pan.baidu.com/s/1FhaJvQxxMDq_vTIkro8cHg 提取码: qmrf
 压缩文件`fish_weights.zip`解压后，将文件`trained_weights.h5`放到文件夹`saved_model`中。
-###3.1 单张图片目标检测
+### 3.1 单张图片目标检测
 文件夹`keras-yolo3-master`中打开终端Terminal，
 然后运行命令`jupyter notebook`，浏览器会自动打开并访问jupyter页面。
 在jupyter页面打开代码文件`yolo_test.ipynb`，依次运行代码块即可。
@@ -299,8 +299,8 @@ if __name__ == '__main__':
 运行结果如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-9c939a89ad8d6916.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-###3.2 视频目标检测
-####3.2.1 将图片合成为1部视频
+### 3.2 视频目标检测
+#### 3.2.1 将图片合成为1部视频
 文件夹`keras-YOLOv3`中打开终端Terminal，运行命令`sudo apt-get install ffmpeg`安装软件ffmpeg。
 安装成功如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-ab2af84d45b6363f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -314,7 +314,7 @@ ffmpeg命令参数解释：
 运行结果如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-10eaa244d4352e15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-####3.2.2 调用代码文件yolo_video.py
+#### 3.2.2 调用代码文件yolo_video.py
 继续在此Terminal中运行命令`pip install opencv-python`，安装opencv-python库。
 继续在此Terminal中运行命令`cd keras-yolo3-master`，进入文件夹`keras-yolo3-master`。
 继续在此Terminal中运行命令`python yolo_video.py --input 1.mp4 --output fish_output.mp4`，表示对视频文件`1.mp4`做目标检测，并将检测结果保存为视频文件`fish_output.mp4`。
@@ -324,7 +324,7 @@ YOLOv3模型速度很快，在本案例中检测1张图片只需要0.05秒。
 本节实践的结果，视频输出文件`fish_output.mp4`上传到百度云盘。
 链接: https://pan.baidu.com/s/1dQFcefhb3e-mnBWt-r-z3Q 提取码: yhxy 
 
-###3.3 多张图片目标检测
+### 3.3 多张图片目标检测
 本节内容是将3.1节和3.2节内容结合起来，直接读取文件夹的若干图片做目标检测并展示为视频效果。
 在文件夹`keras-yolo3-master`中新建一个代码文件`yolo_multiImages.py`，将下面一段代码复制到其中。
 运行代码可以完成2个功能：

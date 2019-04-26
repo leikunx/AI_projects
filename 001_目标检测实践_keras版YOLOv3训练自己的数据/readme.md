@@ -25,17 +25,17 @@
 * tensorflow_gpu ：1.10
 * Keras ：2.2.4
 * 如果有显存为8G的显卡，在Windows操作系统下也**无法运行**本文下面的代码。会报错"显存不足"。
-所以读者需要安装Ubuntu操作系统，建议选择Ubuntu16.04，制作系统U盘后非常容易安装。
-如果有显存为11G的显卡，在Windows操作系统下可以继续本文下面的实验。
-有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《[深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装](https://www.jianshu.com/p/4ebaa78e0233)》
+* 所以读者需要安装Ubuntu操作系统，建议选择Ubuntu16.04，制作系统U盘后非常容易安装。
+* 如果有显存为11G的显卡，在Windows操作系统下可以继续本文下面的实验。
+* 有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《[深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装](https://www.jianshu.com/p/4ebaa78e0233)》
 
 ## 1.数据准备
 ### 1.1 数据下载
-如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
-本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类。
-数据集压缩文件下载链接: https://pan.baidu.com/s/1NksESNqBX--YqMJ4zptGdw 提取码: 6p3u
-本文作者在桌面中创建文件夹`keras_YOLOv3`，并将下载好的数据集压缩文件`n01440764.tar`放到其中，如下图所示：
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-9f616a0bf4a91e08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+* 如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
+* 本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类。数据集压缩文件`n01440764.tar`下载链接: https://pan.baidu.com/s/1NksESNqBX--YqMJ4zptGdw 提取码: 6p3u
+* 本文作者在桌面中创建文件夹`keras_YOLOv3`，并将下载好的数据集压缩文件`n01440764.tar`放到其中，如下图所示：
+![](markdown/image01.png)
+
 在文件夹`keras_YOLOv3`中鼠标右击，在显示的菜单中选择`Open in Terminal`，即在文件夹`keras_YOLOv3`中打开Terminal。
 作为合格的Ubuntu系统使用者，要求会使用终端Terminal中的命令完成操作。
 运行命令`mkdir n01440764`创建文件夹`n01440764`。

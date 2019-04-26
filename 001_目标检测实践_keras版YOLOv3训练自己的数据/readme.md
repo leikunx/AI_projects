@@ -2,8 +2,8 @@
 这篇文章介绍了如何使用Keras版YOLOv3训练自己的数据，搭配大量的图片和说明。
 
 ## 致谢声明
-1.本文学习`Patrick_Lxc`的博客《[Keras/Tensorflow+python+yolo3训练自己的数据集](https://blog.csdn.net/Patrick_Lxc/article/details/80615433)》并优化其中代码。
-2.本文学习`qqwweee`的github工程《[keras-yolo3](https://github.com/qqwweee/keras-yolo3)》并优化其中代码。
+1. 本文学习`Patrick_Lxc`的博客《[Keras/Tensorflow+python+yolo3训练自己的数据集](https://blog.csdn.net/Patrick_Lxc/article/details/80615433)》并优化其中代码。
+2. 本文学习`qqwweee`的github工程《[keras-yolo3](https://github.com/qqwweee/keras-yolo3)》并优化其中代码。
 
 ## 配置代码运行环境
 ### 硬件配置要求

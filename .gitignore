@@ -6,7 +6,7 @@
 *.h5
 logs/
 *_test.py
-download_resources/
+resources/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

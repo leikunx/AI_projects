@@ -1,11 +1,13 @@
 # 目标检测实践_Keras版Mask-RCNN训练自己的数据
 这篇文章介绍了如何使用Keras版Mask-RCNN训练自己的数据，搭配大量的图片和说明。
+本实践教程的优点在于不需要使用命令labelme_json_to_dataset，而是使用json文件中的标注信息、cv2库的画图方法生成掩码。
+读者在使用标注软件labelme标注图片数据之后，可以很快地开始模型训练。
 
 ## 致谢声明
 1. 本文基于`matterport`的github工程《[Mask_RCNN](https://github.com/matterport/Mask_RCNN )》学习训练自己的数据。
-2. 本文学习`一呆飞仙`的博客《[Mask RCNN训练自己的数据集](https://blog.csdn.net/l297969586/article/details/79140840 )》并优化实现流程。
-3. 本文学习`Oliver Cui`的博客《[mask rcnn训练自己的数据集](https://blog.csdn.net/qq_29462849/article/details/81037343 )》并优化实现流程。
-4. 本文学习`Jayce~`的博客《[Mask_RCNN训练自己的数据，制作类似于COCO数据集中所需要的Json训练集](https://blog.csdn.net/qq_15969343/article/details/80167215 )》并优化实现流程。
+2. 本文学习`一呆飞仙`的博客《[Mask RCNN训练自己的数据集](https://blog.csdn.net/l297969586/article/details/79140840 )》。
+3. 本文学习`Oliver Cui`的博客《[mask rcnn训练自己的数据集](https://blog.csdn.net/qq_29462849/article/details/81037343 )》。
+4. 本文学习`Jayce~`的博客《[Mask_RCNN训练自己的数据，制作类似于COCO数据集中所需要的Json训练集](https://blog.csdn.net/qq_15969343/article/details/80167215 )》。
 
 ## 配置代码运行环境
 运行`matterport`的github工程`Mask_RCNN`中的这2个代码文件，从而确保运行环境是可用的：
@@ -29,6 +31,7 @@
 * 有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《[深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装](https://www.jianshu.com/p/4ebaa78e0233)》
 
 ## 1.数据准备
+
 ### 1.1 阅读download_resources/readme.md，并完成其中内容
 * 如果读者有自己已经使用labelme软件标注好的数据，可以直接跳到1.4节图片压缩。
 ### 1.2 在Windows10中安装软件labelme
@@ -43,7 +46,8 @@
   标注完成按Ctrl+S组合键保存，请一定记得保存，否则标注无效。
 ![点击Create_Polygons.jpg](markdown_images/02.jpg)
 ### 1.3 获取像素足够的图片
-
+  原始图片数据文件夹`resources/n01440764`中有部分图片像素大小不足够，所以需要选出像素足够的图片。
+  使用代码文件`code/_01_select_images.py`实现选出像素足够的图片，使用命令脚本文件`_01_选出像素足够的图片.cmd`调用代码文件`code/_01_select_images.py`，读者根据自己的实际情况修改命令脚本文件`_01_选出像素足够的图片.cmd`。
 ### 1.4 数据标注 
 
 ### 1.5 检查标注数据
@@ -63,6 +67,7 @@
 
 ## 4.总结
 需求开发是工程当中很重要的一个环节，完善的需求开发有利于开展后续的技术开发工作。
+
 ###4.1 工程需求清单
 1. 阅读论文，了解论文《[Mask R-CNN](https://arxiv.org/pdf/1703.06870 )》中的模型结构、模型效果、实现细节等内容。
 2. 阅读代码，理解github工程《[Mask_RCNN](https://github.com/matterport/Mask_RCNN )》中如何训练自己数据的运行逻辑

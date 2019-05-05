@@ -10,5 +10,5 @@
 ![资源文件夹下载后示意图](../markdown_images/05.jpg)
 
 ## 讲解视频资源
-本工程作者的讲解Mask-RCNN的视频，压缩文件`2018年4月28日讲解Mask-RCNN论文和实践.zip`
-链接: https://pan.baidu.com/s/1mSljYS4VtpxMpRwMGKo47Q 提取码: ksbf 
+* 本工程作者的讲解Mask-RCNN的视频，压缩文件`2018年4月28日讲解Mask-RCNN论文和实践.zip`
+* 链接: https://pan.baidu.com/s/1mSljYS4VtpxMpRwMGKo47Q 提取码: ksbf 

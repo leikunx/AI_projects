@@ -10,7 +10,7 @@
 4. 本文学习`Jayce~`的博客《[Mask_RCNN训练自己的数据，制作类似于COCO数据集中所需要的Json训练集](https://blog.csdn.net/qq_15969343/article/details/80167215 )》。
 
 ## 配置代码运行环境
-运行`matterport`的github工程`Mask_RCNN`中的这2个代码文件，从而确保运行环境是可用的：
+读者需要先保证自己能够运行`matterport`的github工程`Mask_RCNN`中的这2个代码文件，从而确保运行环境是可用的：
 1. 文件路径为`samples/demo.ipynb`
 2. 文件路径为`samples/shapes/train_shapes.ipynb`，从这个文件中可以学到如何训练一个最简单的数据集
 
@@ -34,7 +34,8 @@
 
 ## 1.数据准备
 
-### 1.1 阅读download_resources/readme.md，并完成其中内容
+### 1.1 下载资源
+* 阅读[resources/readme.md](resources/readme.md)，并完成其中内容。
 * 如果读者有自己已经使用labelme软件标注好的数据，可以直接跳到1.6节`改变图片大小`。
 
 ### 1.2 在Windows10中安装软件labelme

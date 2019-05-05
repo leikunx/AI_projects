@@ -8,3 +8,7 @@
 ## 解压后示意图
 压缩文件解压后，文件夹`resources`中应该如下图所示：
 ![资源文件夹下载后示意图](../markdown_images/05.jpg)
+
+## 讲解视频资源
+本工程作者的讲解Mask-RCNN的视频，压缩文件`2018年4月28日讲解Mask-RCNN论文和实践.zip`
+链接: https://pan.baidu.com/s/1mSljYS4VtpxMpRwMGKo47Q 提取码: ksbf 

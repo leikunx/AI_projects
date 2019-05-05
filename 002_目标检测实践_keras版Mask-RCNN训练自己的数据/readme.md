@@ -1,9 +1,11 @@
 # 目标检测实践_Keras版Mask-RCNN训练自己的数据
-* 这篇文章介绍了如何使用Keras版Mask-RCNN训练自己的数据，搭配大量的图片和说明。
+* Mask-RCNN扩展性强，可完成目标检测、实例分割这2种功能。这篇文章介绍了如何使用Keras版Mask-RCNN训练自己的数据，搭配大量的图片和说明。
 * 本实践教程的优点在于不需要使用命令labelme_json_to_dataset，而是使用json文件中的标注信息、cv2库的画图方法生成掩码。
-* 读者在使用标注软件labelme标注图片数据之后，可以很快地开始模型训练。
+* 本文详细介绍了作者是如何训练自己的数据，如果读者需要训练自己的数据，需要修改以下几个文件中的内容：
+1. `resources/model_config.json`中的`className_list`
+2. cmd命令脚本文件中的各项参数，包括：文件夹路径、图片宽高、图片文件后缀名等
 
-## 致谢声明
+## 致谢
 1. 本文基于`matterport`的github工程《[Mask_RCNN](https://github.com/matterport/Mask_RCNN )》学习训练自己的数据。
 2. 本文学习`一呆飞仙`的博客《[Mask RCNN训练自己的数据集](https://blog.csdn.net/l297969586/article/details/79140840 )》。
 3. 本文学习`Oliver Cui`的博客《[mask rcnn训练自己的数据集](https://blog.csdn.net/qq_29462849/article/details/81037343 )》。
@@ -47,7 +49,7 @@
 * 使用代码文件`code/_01_select_images.py`选出像素足够的图片。
 * 使用命令脚本文件`code/_01_选出像素足够的图片.cmd`调用代码文件`code/_01_select_images.py`。
 cmd文件双击即可运行，运行结果如下图所示：
-![使用01代码文件结果截图](markdown_images/03.jpg)
+![使用01命令脚本文件结果截图](markdown_images/03.jpg)
 
 ### 1.4 数据标注 
 1. 在任意位置打开cmd；
@@ -62,27 +64,51 @@ cmd文件双击即可运行，运行结果如下图所示：
 ### 1.5 检查标注文件
 * 标注图片是一件苦力活，通常由多人分工协作完成。因为多人分工协作，更容易出现标注错误的情况，所以有必要检查标注文件，从而保证模型训练能够正常运行。
 * 使用代码文件`code/_02_check_labels.py`检查标注。
-* 使用命令脚本文件`code/_02_检查json文件.cmd`调用代码文件`code/_02_check_labels.py`，读者需要根据自己的实际情况修改命令脚本文件`code/_02_check_labels.py`。
+* 使用命令脚本文件`code/_02_检查json文件.cmd`调用代码文件`code/_02_check_labels.py`。
 cmd文件双击即可运行，运行结果如下图所示，本文作者特意在resources.zip中保留047.jpg这张图，让读者体会本节的作用。
-![检查标注文件结果截图](markdown_images/04.jpg)
+![使用02命令脚本文件结果截图](markdown_images/04.jpg)
 
 ### 1.6 改变图片大小
 * 在`matterport`的工程`Mask_RCNN`中会对任意大小的图片做等比例缩放至目标大小的图片，不足的位置补零。
 * 但是本文作者仍然觉得提前改变图片大小是有用的，能够避免训练过程中因为像素不符合要求报错或者其他问题。
-* 使用代码文件`code/_03_resize_images.py`改变图片大小，里面的代码不难，读者可以尝试去阅读并理解。
-* cmd文件双击即可使用，使用命令脚本文件`code/_03_生成640x640的图片.cmd`调用代码文件`code/_03_resize_images.py`，读者根据自己的实际情况修改命令脚本文件`code/_03_生成640x640的图片.cmd`。
+* 使用代码文件`code/_03_resize_images.py`改变图片大小。
+* 使用命令脚本文件`code/_03_生成640x640的图片.cmd`调用代码文件`code/_03_resize_images.py`。
+cmd文件双击即可运行，运行结果如下图所示：
+![使用03命令脚本文件结果截图](markdown_images/06.jpg)
 
 ## 2.模型训练
+
+### 2.1 使用jupyter训练
 * 使用代码文件`code/_04_train_fish.ipynb`完成模型训练，本文作者在代码中主要实现了以下2个功能：
 1. 随机划分训练集、验证集、测试集；
 2. 读取标注结果json文件的信息、使用cv2库的方法， 生成图片对应的掩码。
+* 使用命令脚本文件`code/_04_使用jupyter训练.cmd`启动jupyter服务，并打开代码文件`code/_04_train_fish.ipynb`
+
+### 2.2
+* 使用代码文件`code/_05_train.py`也可以完成模型训练，代码文件`code/_05_train.py`是2.1节代码文件`code/_04_train_fish.ipynb`的简化。
+* 使用命令脚本文件`code/_05_双击即可开始训练.cmd`调用代码文件`code/_05_train.py`
+cmd文件双击即可运行，运行结果如下图所示：
+![使用05命令脚本文件结果截图](markdown_images/07.jpg)
 
 ## 3.模型测试
 
 ### 3.1 单张图片目标检测
+* 使用代码文件`code/_06_test_one_image.py`对单张图片做目标检测，本文作者在代码中主要实现了以下2个功能：
+1. 随机从文件夹`resources/n01440764`中选取一张图片；
+2. 对选出的图片做目标检测，并使用matplotlib库展示。
+* 使用命令脚本文件`code/_06_测试单张图片.cmd`调用代码文件`code/_06_test_one_image.py`
+cmd文件双击即可运行，运行结果如下图所示：
+![使用06命令脚本文件结果截图](markdown_images/08.jpg)
 
 ### 3.2 多张图片目标检测
-
+* 使用代码文件`code/_07_test_multi_images.py`对多张图片做目标检测，本文作者在代码中主要实现了以下4个功能：
+1. 只需在参数中指定多张图片所在的文件夹，即可遍历多张图片做目标检测；
+2. 将多张图片的目标检测结果使用cv2库以动画的形式展示；
+3. 在动画展示过程中，可以按空格键暂停，第2次按空格键时继续；
+4. 可以将多张图片的目标检测结果保存为视频文件，文件格式为avi。
+* 使用命令脚本文件`code/_07_测试多张图片.cmd`调用代码文件`code/_07_test_multi_images.py`
+cmd文件双击即可运行，运行效果如下图所示：
+![使用07命令脚本文件效果截图](markdown_images/09.gif)
 
 ## 4.总结
 需求开发是工程当中很重要的一个环节，完善的需求开发有利于开展后续的技术开发工作。

@@ -95,14 +95,17 @@ def check_4(dirPath, image_suffix, label_suffix):
             print('%s此图片文件使用PIL和cv2这两个库读出的宽高不同，将被删除' %imageFilePath)
             os.remove(imageFilePath)
             labelFilePath = imageFilePath.rstrip(image_suffix) + label_suffix
+            print('%s此标注文件将被删除' %labelFilePath)
             os.remove(labelFilePath)
     
-# 从文本文件中解析出物体种类列表className_list，要求每个种类占一行
-def get_classNameList(txtFilePath):
-    with open(txtFilePath, 'r', encoding='utf8') as file:
+# 从json文件中解析出物体种类列表className_list，要求每个种类占一行
+def get_classNameList(config_jsonFilePath):
+    with open(config_jsonFilePath, 'r', encoding='utf8') as file:
         fileContent = file.read()
-        line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
-        className_list= sorted(line_list, reverse=False)
+    json_dict = json.loads(fileContent)
+    className_list = json_dict['className_list']
+    className_list = [k.strip() for k in className_list]
+    className_list= sorted(className_list, reverse=False)
     return className_list
     
 # 解析运行代码文件时传入的参数
@@ -121,10 +124,10 @@ def parse_args():
         type=str,
         help='标注文件的后缀',
         default='.json')
-    parser.add_argument('-c', '--class_txtFilePath',
+    parser.add_argument('-c', '--config_jsonFilePath',
         type=str,
-        help='检测种类名称列表的txt文件路径',
-        default='./className_list.txt')
+        help='模型配置json文件路径',
+        default='../resources/model_config.json')
     argument_namespace = parser.parse_args()
     return argument_namespace      
     
@@ -133,8 +136,8 @@ if __name__ == '__main__':
     argument_namespace = parse_args()
     dirPath = argument_namespace.dirPath
     assert os.path.exists(dirPath), 'not exists this path: %s' %dirPath
-    class_txtFilePath = argument_namespace.class_txtFilePath
-    className_list = get_classNameList(class_txtFilePath)
+    config_jsonFilePath = argument_namespace.config_jsonFilePath
+    className_list = get_classNameList(config_jsonFilePath)
     image_suffix = argument_namespace.image_suffix
     label_suffix = argument_namespace.label_suffix
     image_suffix = '.' + image_suffix.lstrip('.')

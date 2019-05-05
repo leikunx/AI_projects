@@ -35,7 +35,7 @@
 ## 1.数据准备
 
 ### 1.1 下载资源
-* 阅读[resources/readme.md](resources/readme.md)，并完成其中内容。
+* 阅读[resources/readme.md](resources/)，并完成其中内容。
 * 如果读者有自己已经使用labelme软件标注好的数据，可以直接跳到1.5节`检查标注数据`。
 
 ### 1.2 在Windows10中安装软件labelme

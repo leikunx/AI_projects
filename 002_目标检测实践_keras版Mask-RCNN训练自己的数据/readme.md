@@ -36,32 +36,36 @@
 
 ### 1.1 下载资源
 * 阅读[resources/readme.md](resources/readme.md)，并完成其中内容。
-* 如果读者有自己已经使用labelme软件标注好的数据，可以直接跳到1.6节`改变图片大小`。
+* 如果读者有自己已经使用labelme软件标注好的数据，可以直接跳到1.5节`检查标注数据`。
 
 ### 1.2 在Windows10中安装软件labelme
 1. 在任意位置打开cmd；
 2. 在cmd中运行命令`pip install labelme`，等待安装成功；
 
 ### 1.3 获取像素足够的图片
-* 原始图片数据文件夹`resources/n01440764`中有部分图片像素大小不足够，所以需要选出像素足够的图片。
-* 使用代码文件`code/_01_select_images.py`选出像素足够的图片，里面的代码不难，读者可以尝试去阅读并理解。
-* cmd文件双击即可使用，使用命令脚本文件`code/_01_选出像素足够的图片.cmd`调用代码文件`code/_01_select_images.py`，读者需要根据自己的实际情况修改命令脚本文件`code/_01_选出像素足够的图片.cmd`。
+* 原始图片数据文件夹`resources/n01440764`中有大多数图片像素低于416x416，像素低的图片不利于模型的学习，所以需要选出像素足够的图片。
+* 使用代码文件`code/_01_select_images.py`选出像素足够的图片。
+* 使用命令脚本文件`code/_01_选出像素足够的图片.cmd`调用代码文件`code/_01_select_images.py`。
+cmd文件双击即可运行，运行结果如下图所示：
+![使用01代码文件结果截图](markdown_images/03.jpg)
 
 ### 1.4 数据标注 
 1. 在任意位置打开cmd；
 2. 在cmd中运行命令`labelme`，即可打开软件；
 3. 如下图红色箭头标记处所示，首先点击`Open Dir`，选中图片文件所在的文件夹，则软件labelme加载图片；
-![点击Open_Dir.jpg](markdown_images/01.jpg)
-4. 如下图红色箭头标记处所示，点击"Create Polygons"，则可开始标注；
-  多边形形成闭环时，可以选择标注的物体类别；
-  需要修改路点位置或者物体类别时，如下图红色箭头标记处所示，点击"Edit Polygons"。
-  标注完成按Ctrl+S组合键保存，请一定记得保存，否则标注无效。
-![点击Create_Polygons.jpg](markdown_images/02.jpg)
+![点击Open_Dir](markdown_images/01.jpg)
+4. * 如下图红色箭头标记处所示，点击"Create Polygons"，则可开始标注；
+* 多边形形成闭环时，可以选择标注的物体类别；
+* 需要修改路点位置或者物体类别时，如下图红色箭头标记处所示，点击"Edit Polygons"。
+* 标注完成按Ctrl+S组合键保存，请一定记得保存，否则标注无效。
+![点击Create_Polygons](markdown_images/02.jpg)
 
 ### 1.5 检查标注文件
 * 标注图片是一件苦力活，通常由多人分工协作完成。因为多人分工协作，更容易出现标注错误的情况，所以有必要检查标注文件，从而保证模型训练能够正常运行。
-* 使用代码文件`code/_02_check_labels.py`检查标注文件，里面的代码不难，读者可以尝试去阅读并理解。
-* cmd文件双击即可使用，使用命令脚本文件`code/_02_检查json文件.cmd`调用代码文件`code/_02_check_labels.py`，读者需要根据自己的实际情况修改命令脚本文件`code/_02_check_labels.py`。
+* 使用代码文件`code/_02_check_labels.py`检查标注。
+* 使用命令脚本文件`code/_02_检查json文件.cmd`调用代码文件`code/_02_check_labels.py`，读者需要根据自己的实际情况修改命令脚本文件`code/_02_check_labels.py`。
+cmd文件双击即可运行，运行结果如下图所示，本文作者特意在resources.zip中保留047.jpg这张图，让读者体会本节的作用。
+![检查标注文件结果截图](markdown_images/04.jpg)
 
 ### 1.6 改变图片大小
 * 在`matterport`的工程`Mask_RCNN`中会对任意大小的图片做等比例缩放至目标大小的图片，不足的位置补零。

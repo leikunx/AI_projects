@@ -1,10 +1,14 @@
 # 导入常用的库
 import os
+import sys
 import cv2
 import time
 import numpy as np
 import json
+# 工程的根目录
+ROOT_DIR = os.path.abspath("../resources/")
 # 导入Mask RCNN库
+sys.path.append(ROOT_DIR)
 from mrcnn.config import Config
 import mrcnn.model as modellib
 from mrcnn.visualize import random_colors, apply_mask

@@ -84,7 +84,7 @@
 2. 读取标注结果json文件的信息、使用cv2库的方法， 生成图片对应的掩码。
 * 使用命令脚本文件`code/_04_使用jupyter训练.cmd`启动jupyter服务，并打开代码文件`code/_04_train_fish.ipynb`
 
-### 2.2
+### 2.2 使用精简版py代码文件训练
 * 使用代码文件`code/_05_train.py`也可以完成模型训练，代码文件`code/_05_train.py`是2.1节代码文件`code/_04_train_fish.ipynb`的简化。
 * 使用命令脚本文件`code/_05_双击即可开始训练.cmd`调用代码文件`code/_05_train.py`
 * cmd文件双击即可运行，运行结果如下图所示：

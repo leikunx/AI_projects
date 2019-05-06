@@ -113,7 +113,8 @@ def detect_multi_images(model, imageFilePath_list, config_dict, video_aviFilePat
         videoWriter = cv2.VideoWriter(video_aviFilePath, fourcc, 2, display_size)
     for imageFilePath in imageFilePath_list:
         # 根据图片文件路径读取图片
-        image_ndarray = cv2.imread(imageFilePath)[:,   :, ::-1]
+        # [:, :, ::-1]表示第3维取反，训练模型时图片的通道顺序为RGB，所以测试模型时图片的通道顺序也必须为RGB   
+        image_ndarray = cv2.imread(imageFilePath)[:, :, ::-1]
         # 改变图片大小，利于模型检出实例
         resized_image_ndarray = cv2.resize(image_ndarray, size,
             interpolation=cv2.INTER_LANCZOS4)
@@ -130,12 +131,16 @@ def detect_multi_images(model, imageFilePath_list, config_dict, video_aviFilePat
         drawed_image_ndarray = cv2.resize(drawed_image_ndarray, display_size,
             interpolation=cv2.INTER_LANCZOS4)
         cv2.imshow(windowName, drawed_image_ndarray[:, :, ::-1])
-        # 使用空格键可以暂停检测，第二次按空格键继续检测
+        # 如果视频文件路径不为空，则当前展示画面作为一帧存入视频    
+        if video_aviFilePath != None:
+            videoWriter.write(drawed_image_ndarray[:, :, ::-1])  
+        # 第1次按空格键可以暂停检测，第2次按空格键继续检测
         pressKey = cv2.waitKey(400)
         if ord(' ') == pressKey:
             cv2.waitKey(0)
-        if video_aviFilePath != None:
-            videoWriter.write(drawed_image_ndarray[:, :, ::-1])  
+        # 按Esc键或者q键可以退出循环
+        if 27 == pressKey or ord('q') == pressKey:
+            break
     videoWriter.release()
     cv2.destroyAllWindows()
 

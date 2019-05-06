@@ -80,7 +80,7 @@ def display_instances(image_ndarray, boxes, masks, class_ids,
             thickness = 3
             leftTop_point = x1, y1
             rightDown_point = x2, y2
-            cv2.rectangle(image_ndarray, leftTop_point, rightDown_point, color, thickness, lineType=8)
+            cv2.rectangle(image_ndarray, leftTop_point, rightDown_point, color, thickness)
         # 绘制边界框上面的标题
         if show_title:    
             class_id = class_ids[i]

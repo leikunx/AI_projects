@@ -270,8 +270,8 @@ if __name__ == '__main__':
 ### 2.2 划分训练集和测试集
 1.将文件夹`images_416*416`移动到文件夹`keras-yolo3-master`中，如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-eb850be443b5d9dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-2.打开文件夹`keras-yolo3-master`中的文件夹`model_data`，编辑其中的文件`voc_names.txt`。
-文件`voc_names.txt`中每1行代表1个类别。
+2.打开文件夹`keras-yolo3-master`中的文件夹`model_data`，编辑其中的文件`voc_classes.txt`。
+文件`voc_classes.txt`中每1行代表1个类别。
 3.文件夹`keras-yolo3-master`中打开终端Terminal，然后运行命令`python generateTxtFile.py -dir images_416*416`会划分训练集和测试集，并产生与之对应的文本文件。
 训练集文件`dataset_train.txt`，测试集文件`dataset_test.txt`，如下图所示：
 ![image.png](https://upload-images.jianshu.io/upload_images/10345471-da02b0d5ea84ace2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

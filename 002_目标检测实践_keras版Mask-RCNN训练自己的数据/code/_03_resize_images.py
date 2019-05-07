@@ -42,12 +42,12 @@ def batch_resizeLabel(in_dirPath, out_dirPath, new_size, image_suffix, label_suf
     labelFilePath_list = get_filePathList(in_dirPath, label_suffix)
     for labelFilePath in labelFilePath_list:
         old_labelFilePath = labelFilePath
-        old_imageFilePath = old_labelFilePath.rstrip(label_suffix) + image_suffix
+        old_imageFilePath = old_labelFilePath[:-len(label_suffix)] + image_suffix
         image = Image.open(old_imageFilePath)
         old_size = image.size
         labelFileName = os.path.split(old_labelFilePath)[1]
         new_labelFilePath = os.path.join(out_dirPath, labelFileName)
-        new_imageFilePath = new_labelFilePath.rstrip(label_suffix) + image_suffix
+        new_imageFilePath = new_labelFilePath[:-len(label_suffix)] + image_suffix
         single_resizeLabel(old_labelFilePath, new_labelFilePath, old_size, new_size, new_imageFilePath)
         
 #修改文件夹中的单个jpg文件

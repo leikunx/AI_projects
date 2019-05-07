@@ -12,7 +12,7 @@ def check_1(dirPath, image_suffix, label_suffix):
     imageFilePath_list = get_filePathList(dirPath, image_suffix)
     allFileMarked = True
     for imageFilePath in imageFilePath_list:
-        labelFilePath = imageFilePath.rstrip(image_suffix) + label_suffix
+        labelFilePath = imageFilePath[:-len(image_suffix)] + label_suffix
         if not os.path.exists(labelFilePath):
             print('%s 此图片文件没有对应的标注文件，将被删除' %imageFilePath)
             os.remove(imageFilePath)
@@ -22,7 +22,7 @@ def check_1(dirPath, image_suffix, label_suffix):
     # 检查有标注文件却没有图片的情况，删除多余的标注文件    
     labelFilePath_list = get_filePathList(dirPath, label_suffix)
     for labelFilePath in labelFilePath_list:
-        imageFilePath = labelFilePath.rstrip(label_suffix) + image_suffix
+        imageFilePath = labelFilePath[:-len(label_suffix)] + image_suffix
         if  not os.path.exists(imageFilePath):
             print('%s 此标注文件没有对应的图片文件，将被删除' %labelFilePath)
             os.remove(labelFilePath)
@@ -53,7 +53,7 @@ def check_3(dirPath, image_suffix, label_suffix):
     labelFilePath_list = get_filePathList(dirPath, label_suffix)
     allFileCorrect = True
     for labelFilePath in labelFilePath_list:
-        imageFilePath = labelFilePath.rstrip(label_suffix) + image_suffix
+        imageFilePath = labelFilePath[:-len(label_suffix)] + image_suffix
         image = Image.open(imageFilePath)
         width, height = image.size
         image.close()
@@ -94,7 +94,7 @@ def check_4(dirPath, image_suffix, label_suffix):
         if pil_width != cv2_width or pil_height != cv2_height:
             print('%s此图片文件使用PIL和cv2这两个库读出的宽高不同，将被删除' %imageFilePath)
             os.remove(imageFilePath)
-            labelFilePath = imageFilePath.rstrip(image_suffix) + label_suffix
+            labelFilePath = imageFilePath[:-len(image_suffix)] + label_suffix
             print('%s此标注文件将被删除' %labelFilePath)
             os.remove(labelFilePath)
     

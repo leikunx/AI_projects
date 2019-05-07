@@ -115,11 +115,11 @@ class ShapesDataset(utils.Dataset):
             center_x ,center_y = center_point
             contour_x, contour_y = contour_point
             radius = int(((center_x - contour_x) ** 2 + (center_y - contour_y) ** 2) ** 0.5)
-            mask_ndarray[:, :, i:i+1] = self.draw_circle(mask_ndarray[:, :, i].copy(), tuple(center_point), radius, 128, -1)
+            mask_ndarray[:, :, i:i+1] = self.draw_circle(mask_ndarray[:, :, i:i+1].copy(), tuple(center_point), radius, 128, -1)
         elif shape_type == 'point':
             center_point = point_list[0]
             radius = 3
-            mask_ndarray[:, :, i:i+1] = self.draw_circle(mask_ndarray[:, :, i].copy(), tuple(center_point), radius, 128, -1)
+            mask_ndarray[:, :, i:i+1] = self.draw_circle(mask_ndarray[:, :, i:i+1].copy(), tuple(center_point), radius, 128, -1)
     
     def draw_fillPoly(self, mask, point_ndarray, color):
         cv2.fillPoly(mask, point_ndarray, 128)

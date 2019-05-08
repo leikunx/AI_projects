@@ -88,6 +88,11 @@ class ShapesDataset(utils.Dataset):
         label_list = []
         for i, shape in enumerate(shapes):
             self.draw_mask(mask_ndarray, i, shape, label_list)
+        # 解决不同实例的掩码重叠的问题，次序在后的掩码在最上层，次序在前的掩码的重叠部分被遮挡，即赋值为0
+        canDrawRegion_ndarray = np.logical_not(mask_ndarray[:, :, -1]).astype(np.uint8)
+        for i in range(len(shapes) - 2, -1, -1):
+            mask_ndarray[:, :, i] = mask_ndarray[:, :, i] * canDrawRegion_ndarray
+            canDrawRegion_ndarray = np.logical_and(canDrawRegion_ndarray, np.logical_not(mask_ndarray[:, :, i]))
         # 把物体种类名称转换为物体种类Id
         classId_list = [self.class_names.index(k) for k in label_list]
         return mask_ndarray.astype(np.bool), np.array(classId_list)

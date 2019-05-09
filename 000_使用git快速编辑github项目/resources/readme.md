@@ -33,7 +33,7 @@
 * 如图中红色下划线所示，When Commiting text files, CRLF will be converted to LF，翻译为中文：当提交文本文件时，CRLF符号将被转换为LF符号。
 * 这两个符号会造成Windows系统和Linux系统的兼容问题，作者曾经花费1小时解决此兼容问题，所以对此有所体会。理解CRLF和LF看这2篇文章：
 * [话说Git来管控CRLF和LF混乱局面](https://www.jianshu.com/p/684d94caebfe)
-* [解决crlf 和 lf不同带来的冲突问题][https://www.cnblogs.com/kugeliu/p/9154021.html]
+* [解决crlf 和 lf不同带来的冲突问题](https://www.cnblogs.com/kugeliu/p/9154021.html)
 * 点击`Next`按钮，如下图红色箭头标记处所示：
 * ![安装界面09](../markdown_images/10.jpg)
 10. 点击`Next`按钮，如下图红色箭头标记处所示：

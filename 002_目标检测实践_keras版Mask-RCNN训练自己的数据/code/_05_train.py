@@ -4,6 +4,7 @@ import sys
 import numpy as np
 import json
 import cv2
+import pickle
 # 工程的根目录
 ROOT_DIR = os.path.abspath("../resources/")
 # 导入Mask RCNN库
@@ -57,46 +58,62 @@ class ModelConfig(Config):
 
 # 数据集类
 class ShapesDataset(utils.Dataset):
+    # 类初始化方法
     def __init__(self, imageFilePath_list, json_dict):
         super(ShapesDataset, self).__init__()
         self.className_list = json_dict['className_list']
-        # Add classes
+        # 添加物体种类
         for i, className in enumerate(self.className_list, 1):
             self.add_class(source=json_dict['source'], class_id=i, class_name=className)
-        # Add images
+        # 添加图片
         for i, imageFilePath in enumerate(imageFilePath_list):
             jsonFilePath = os.path.splitext(imageFilePath)[0] + '.json'
+            mask_pickleFilePath = os.path.splitext(imageFilePath)[0] + '_mask.pickle'
             self.add_image(source=json_dict['source'], image_id=i,
-                           path=imageFilePath, jsonFilePath=jsonFilePath)
-
+                           path=imageFilePath, jsonFilePath=jsonFilePath,
+                           canLoadPickle=False, mask_pickleFilePath=mask_pickleFilePath)
+    
+    # 加载图片
     def load_image(self, image_id):
         info = self.image_info[image_id]
         image = cv2.imread(info['path'])[:,:,::-1]
         return image
-
+    
+    # 加载掩码
     def load_mask(self, image_id):
         info = self.image_info[image_id]
-        jsonFilePath = info['jsonFilePath']
-        with open(jsonFilePath, 'r', encoding='utf8') as file:
-            fileContent = file.read()
-        json_dict = json.loads(fileContent)
-        shapes = json_dict['shapes']
-        shape_number = len(shapes)
-        image_ndarray = cv2.imread(info['path'])
-        height, width, _ = image_ndarray.shape
-        mask_ndarray = np.zeros((height, width, shape_number), np.uint8)
-        label_list = []
-        for i, shape in enumerate(shapes):
-            self.draw_mask(mask_ndarray, i, shape, label_list)
-        # 解决不同实例的掩码重叠的问题，次序在后的掩码在最上层，次序在前的掩码的重叠部分被遮挡，即赋值为0
-        canDrawRegion_ndarray = np.logical_not(mask_ndarray[:, :, -1]).astype(np.uint8)
-        for i in range(len(shapes) - 2, -1, -1):
-            mask_ndarray[:, :, i] = mask_ndarray[:, :, i] * canDrawRegion_ndarray
-            canDrawRegion_ndarray = np.logical_and(canDrawRegion_ndarray, np.logical_not(mask_ndarray[:, :, i]))
-        # 把物体种类名称转换为物体种类Id
-        classId_list = [self.class_names.index(k) for k in label_list]
-        return mask_ndarray.astype(np.bool), np.array(classId_list)
+        # 每张图片样本第一次调用load_mask时需要重新生成掩码，并把掩码和种类Id列表保存为pickle文件
+        # 加快训练速度
+        if info['canLoadPickle'] and os.path.exists(info['mask_pickleFilePath']):
+            with open(info['mask_pickleFilePath'], 'rb') as file:
+                result_tuple = pickle.load(file)
+        else:
+            jsonFilePath = info['jsonFilePath']
+            with open(jsonFilePath, 'r', encoding='utf8') as file:
+                fileContent = file.read()
+            json_dict = json.loads(fileContent)
+            shapes = json_dict['shapes']
+            shape_number = len(shapes)
+            image_ndarray = cv2.imread(info['path'])
+            height, width, _ = image_ndarray.shape
+            mask_ndarray = np.zeros((height, width, shape_number), np.uint8)
+            label_list = []
+            for i, shape in enumerate(shapes):
+                self.draw_mask(mask_ndarray, i, shape, label_list)
+            # 解决不同实例的掩码重叠的问题，次序在后的掩码在最上层，次序在前的掩码的重叠部分被遮挡，即赋值为0
+            canDrawRegion_ndarray = np.logical_not(mask_ndarray[:, :, -1]).astype(np.uint8)
+            for i in range(len(shapes) - 2, -1, -1):
+                mask_ndarray[:, :, i] = mask_ndarray[:, :, i] * canDrawRegion_ndarray
+                canDrawRegion_ndarray = np.logical_and(canDrawRegion_ndarray, np.logical_not(mask_ndarray[:, :, i]))
+            # 把物体种类名称转换为物体种类Id
+            classId_list = [self.class_names.index(k) for k in label_list]
+            result_tuple = (mask_ndarray.astype(np.bool), np.array(classId_list))
+            info['canLoadPickle'] = True
+            with open(info['mask_pickleFilePath'], 'wb') as file:
+                pickle.dump(result_tuple, file)
+        return result_tuple
     
+    # 利用json文件中的信息绘制掩码
     def draw_mask(self, mask_ndarray, i, shape, label_list):
         if 'shape_type' not in shape:
             shapeType = 'polygon'
@@ -126,14 +143,17 @@ class ShapesDataset(utils.Dataset):
             radius = 3
             mask_ndarray[:, :, i:i+1] = self.draw_circle(mask_ndarray[:, :, i:i+1].copy(), tuple(center_point), radius, 128, -1)
     
+    # 画多边形
     def draw_fillPoly(self, mask, point_ndarray, color):
         cv2.fillPoly(mask, point_ndarray, 128)
         return mask
     
+    # 画矩形
     def draw_rectangle(self, mask, leftTop_point, rightDown_point, color, thickness):
         cv2.rectangle(mask, leftTop_point, rightDown_point, color, thickness)
         return mask
     
+    # 画圆形
     def draw_circle(self, mask, center_point, radius, color, thickness):
         cv2.circle(mask, center_point, radius, color, thickness)
         return mask
@@ -182,9 +202,9 @@ def parse_args():
 if __name__ == '__main__':
     # 解析出调用代码文件时传入的参数
     argument_namespace = parse_args()
-    in_dirPath = argument_namespace.in_dirPath
-    image_suffix = argument_namespace.image_suffix
-    config_jsonFilePath = argument_namespace.config
+    in_dirPath = argument_namespace.in_dirPath.strip()
+    image_suffix = argument_namespace.image_suffix.strip()
+    config_jsonFilePath = argument_namespace.config.strip()
     # 根据配置文件和配置类ModelConfig实例化模型配置对象
     json_dict = get_jsonDict(config_jsonFilePath)
     modelConfig = ModelConfig(json_dict)

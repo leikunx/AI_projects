@@ -134,12 +134,12 @@ def parse_args():
 # 主函数    
 if __name__ == '__main__':
     argument_namespace = parse_args()
-    dirPath = argument_namespace.dirPath
+    dirPath = argument_namespace.dirPath.strip()
     assert os.path.exists(dirPath), 'not exists this path: %s' %dirPath
-    config_jsonFilePath = argument_namespace.config_jsonFilePath
+    config_jsonFilePath = argument_namespace.config_jsonFilePath.strip()
     className_list = get_classNameList(config_jsonFilePath)
-    image_suffix = argument_namespace.image_suffix
-    label_suffix = argument_namespace.label_suffix
+    image_suffix = argument_namespace.image_suffix.strip()
+    label_suffix = argument_namespace.label_suffix.strip()
     image_suffix = '.' + image_suffix.lstrip('.')
     label_suffix = '.' + label_suffix.lstrip('.')
     check_1(dirPath, image_suffix, label_suffix)

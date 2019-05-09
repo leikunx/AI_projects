@@ -175,11 +175,11 @@ def parse_args():
 if __name__ == '__main__':
     # 解析传入的参数
     argument_namespace = parse_args()
-    model_dirPath = argument_namespace.model_dirPath
-    image_dirPath = argument_namespace.image_dirPath
-    image_suffix = argument_namespace.image_suffix
-    config_jsonFilePath = argument_namespace.config_jsonFilePath
-    video_aviFilePath = argument_namespace.video_aviFilePath
+    model_dirPath = argument_namespace.model_dirPath.strip()
+    image_dirPath = argument_namespace.image_dirPath.strip()
+    image_suffix = argument_namespace.image_suffix.strip()
+    config_jsonFilePath = argument_namespace.config_jsonFilePath.strip()
+    video_aviFilePath = argument_namespace.video_aviFilePath.strip()
     # 获取模型配置字典，并实例化模型对象 
     config_dict = get_jsonDict(config_jsonFilePath)
     model = get_model(model_dirPath, config_dict)
@@ -188,4 +188,5 @@ if __name__ == '__main__':
     assert len(imageFilePath_list), 'no image in image directory path, please check your input parameters: image_dirPath , image_suffix'
     print('对此文件夹路径的图片做检测：%s'%image_dirPath)
     # 对多张图片做检测
-    detect_multi_images(model, imageFilePath_list, config_dict, video_aviFilePath)                            
+    detect_multi_images(model, imageFilePath_list, config_dict, video_aviFilePath)
+    print('多张图片的检测结果录制为视频，保存在此路径:%s' %os.path.abspath(video_aviFilePath))

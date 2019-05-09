@@ -96,10 +96,10 @@ def parse_args():
 if __name__ == '__main__':
     # 解析传入的参数
     argument_namespace = parse_args()
-    model_dirPath = argument_namespace.model_dirPath
-    image_dirPath = argument_namespace.image_dirPath
-    image_suffix = argument_namespace.image_suffix
-    config_jsonFilePath = argument_namespace.config
+    model_dirPath = argument_namespace.model_dirPath.strip()
+    image_dirPath = argument_namespace.image_dirPath.strip()
+    image_suffix = argument_namespace.image_suffix.strip()
+    config_jsonFilePath = argument_namespace.config.strip()
     # 获取模型配置字典，并实例化模型对象 
     config_dict = get_jsonDict(config_jsonFilePath)
     model = get_model(model_dirPath, config_dict)

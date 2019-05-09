@@ -102,14 +102,14 @@ def parse_args():
 # 主函数    
 if __name__ == '__main__':
     argument_namespace = parse_args()
-    in_dirPath = argument_namespace.in_dirPath
+    in_dirPath = argument_namespace.in_dirPath.strip()
     assert os.path.exists(in_dirPath), 'not exists this path: %s' %in_dirPath
     width = argument_namespace.width
     height = argument_namespace.height
     new_size = (width, height)
-    out_dirPath = argument_namespace.out_dirPath
-    image_suffix = argument_namespace.image_suffix
-    label_suffix = argument_namespace.label_suffix
+    out_dirPath = argument_namespace.out_dirPath.strip()
+    image_suffix = argument_namespace.image_suffix.strip()
+    label_suffix = argument_namespace.label_suffix.strip()
     image_suffix = '.' + image_suffix.lstrip('.')
     label_suffix = '.' + label_suffix.lstrip('.')
     batch_resizeImage(in_dirPath, out_dirPath, new_size, image_suffix, label_suffix)

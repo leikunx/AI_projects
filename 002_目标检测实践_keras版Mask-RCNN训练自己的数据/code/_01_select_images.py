@@ -45,13 +45,13 @@ def parse_args():
 # 获取数量为200的合格样本存放到selected_images文件夹中
 if __name__ == "__main__":
     argument_namespace = parse_args()
-    in_dirPath = argument_namespace.in_dir
+    in_dirPath = argument_namespace.in_dir.strip()
     assert os.path.exists(in_dirPath), 'not exists this path: %s' %in_dirPath
-    out_dirPath = argument_namespace.out_dir
+    out_dirPath = argument_namespace.out_dir.strip()
     sample_number = argument_namespace.number
-    in_suffix = argument_namespace.in_suffix
+    in_suffix = argument_namespace.in_suffix.strip()
     in_suffix = '.' + in_suffix.lstrip('.')
-    out_suffix = argument_namespace.out_suffix
+    out_suffix = argument_namespace.out_suffix.strip()
     out_suffix = '.' + out_suffix.lstrip('.')
     required_width = argument_namespace.width
     required_height = argument_namespace.height

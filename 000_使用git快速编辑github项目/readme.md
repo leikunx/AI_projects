@@ -1,6 +1,6 @@
 # 使用git快速编辑github项目
 ## 下载资源
-阅读[resources/](resources/readme.md)，并完成其中内容。
+阅读[resources/readme.md](resources/)，并完成其中内容。
 
 ## git常用命令
 把本地仓库的更新上传到远程仓库，需要按顺序运行下面4个命令：

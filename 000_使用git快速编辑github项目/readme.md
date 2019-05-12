@@ -1,6 +1,10 @@
-# 使用git快速编辑github项目
+3# 使用git快速编辑github项目
 ## 下载资源
 阅读[resources/readme.md](resources/)，并完成其中内容。
+其中内容为Git2.21.0的安装教程。
+
+## 使用非对称加密算法RSA创建公私钥将本地软件Git关联远程仓库github
+请阅读这篇文章，[Git与Github的连接与使用](https://www.cnblogs.com/flora5/p/7152556.html)
 
 ## 远程仓库下载到本地仓库
 1. `git clone {}`，大括号替换为git项目的url地址

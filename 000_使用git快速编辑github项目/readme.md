@@ -4,7 +4,9 @@
 其中内容为Git2.21.0的安装教程。
 
 ## 使用非对称加密算法RSA创建公私钥将本地软件Git关联远程仓库github
-请阅读这篇文章，[Git与Github的连接与使用](https://www.cnblogs.com/flora5/p/7152556.html)
+这2篇文章写得非常详细，能够充分解决如何使用GitHub：
+1. [Git与Github的连接与使用](https://www.cnblogs.com/flora5/p/7152556.html)
+2. [GitHub使用介绍](https://www.cnblogs.com/jinzhaozhao/p/10012504.html)
 
 ## 远程仓库下载到本地仓库
 1. `git clone {}`，大括号替换为git项目的url地址

@@ -1,0 +1,201 @@
+ResNet网络架构
+
+    处理层_0: 输入层，调用keras.layers中的Input类，通过传递参数shape实例化对象
+    数据层_0：矩阵形状：              N x 32 x 32 x 3
+
+resnet_layer_0
+        处理层_1：conv2d_1      卷积核形状：        3 x 3 x 3 x 16 / 1
+    数据层_1：矩阵形状：              N x 32 x 32 x 16
+        处理层_2：batch_normalization_1
+    数据层_2: 矩阵形状：              N x 32 x 32 x 16
+        处理层_3：activation_1
+    数据层_3：矩阵形状：              N x 32 x 32 x 16 
+    
+resnet_layer_1        
+        处理层_4：conv2d_2      卷积核形状：        16 x 1 x 1 x 16 / 1        
+    数据层_4：矩阵形状：              N x 32 x 32 x 16
+
+resnet_layer_2    
+        处理层_5：batch_normalization_2
+    数据层_5：矩阵形状：              N x 32 x 32 x 16
+        处理层_6：activation_2
+    数据层_6: 矩阵形状：              N x 32 x 32 x 16
+        处理层_7：conv2d_3      卷积核形状:         16 x 3 x 3 x 16 / 1
+    数据层_7：矩阵形状：              N x 32 x 32 x 16
+    
+resnet_layer_3    
+        处理层_8: batch_normalization_3
+    数据层_8：矩阵形状:               N x 32 x 32 x 16
+        处理层_9：activation_3    
+    数据层_9：矩阵形状:               N x 32 x 32 x 16
+        处理层_10：conv2d_4     卷积核形状：       16 x 1 x 1 x 64 / 1
+    数据层_10：矩阵形状:              N x 32 x 32 x 64
+    
+shortcut_1
+        处理层_11：route_1   取数据层_3    
+    数据层_11：矩阵形状：            N x 32 x 32 x 16
+        处理层_12：conv2d_5     卷积核形状：       16 x 1 x 1 x 64 / 1
+    数据层_12：矩阵形状：            N x 32 x 32 x 64
+        处理层_13：add_1     把数据层_10、数据层_12相加
+    数据层_13：矩阵形状：            N x 32 x 32 x 64
+    
+resnet_layer_4
+        处理层_14：batch_normalization_4
+    数据层_14：矩阵形状:             N x 32 x 32 x 64
+        处理层_15：activation_4
+    数据层_15：矩阵形状:             N x 32 x 32 x 64
+        处理层_16：conv2d_6    卷积核形状：        64 x 1 x 1 x 16 / 1  
+    数据层_16：矩阵形状:             N x 32 x 32 x 16
+    
+resnet_layer_5    
+        处理层_17：batch_normalization_5
+    数据层_17：矩阵形状:             N x 32 x 32 x 16
+        处理层_18：activation_5
+    数据层_18：矩阵形状:             N x 32 x 32 x 16
+        处理层_19：conv2d_7    卷积核形状：        16 x 3 x 3 x 16 / 1  
+    数据层_19：矩阵形状:             N x 32 x 32 x 16
+    
+resnet_layer_6
+        处理层_20：batch_normalization_6
+    数据层_20：矩阵形状：           N x 32 x 32 x 16
+        处理层_21：activation_6
+    数据层_21：矩阵形状:            N x 32 x 32 x 16
+        处理层_22：conv2d_8    卷积核形状：       16 x 1 x 1 x 64 / 1
+    数据层_22：矩阵形状：           N x 32 x 32 x 64
+
+shortcut_2
+        处理层_23：add_2     把数据层_22、数据层_13相加
+    数据层_23：矩阵形状:            N x 32 x 32 x 64
+    
+resnet_layer_7    
+        处理层_24：batch_normalization_7 
+    数据层_24：矩阵形状:            N x 32 x 32 x 64
+        处理层_25：activation_7
+    数据层_25：矩阵形状:            N x 32 x 32 x 64
+        处理层_26：conv2d_9     卷积核形状：      64 x 1 x 1 x 64 / 2
+    数据层_26：矩阵形状：           N x 16 x 16 x 64
+
+resnet_layer_8
+        处理层_25：batch_normalization_8
+    数据层_25：矩阵形状:            N x 16 x 16 x 64
+        处理层_26：activation_8
+    数据层_26：矩阵形状:            N x 16 x 16 x 64
+        处理层_27：conv2d_10    卷积核形状：      64 x 3 x 3 x 64 / 1
+    数据层_27：矩阵形状:            N x 16 x 16 x 64
+    
+resnet_layer_9
+        处理层_28：batch_normalization_9
+    数据层_28：矩阵形状：           N x 16 x 16 x 64
+        处理层_29：activation_9
+    数据层_29：矩阵形状             N x 16 x 16 x 64
+        处理层_30：conv2d_11    卷积核形状：      64 x 1 x 1 x 128 / 1
+    数据层_30：矩阵形状             N x 16 x 16 x 128
+
+shortcut_3
+        处理层_31：route_2        取数据层_23
+    数据层_31：矩阵形状:            N x 32 x 32 x 64
+        处理层_32：conv2d_12    卷积核形状：      64 x 1 x 1 x 128 / 2
+    数据层_32：矩阵形状：           N x 16 x 16 x 128
+        处理层_33：add_3        把数据层_32、数据层_30相加
+    数据层_33：矩阵形状：           N x 16 x 16 x 128    
+
+resnet_layer_10    
+        处理层_34：batch_normalization_10
+    数据层_34：矩阵形状:            N x 16 x 16 x 128
+        处理层_35：activation_10
+    数据层_35：矩阵形状:            N x 16 x 16 x 128
+        处理层_36：conv2d_13    卷积核形状：      128 x 1 x 1 x 64 / 1
+    数据层_36：矩阵形状:            N x 16 x 16 x 64
+
+resnet_layer_11
+        处理层_37：batch_normalization_11
+    数据层_37：矩阵形状:            N x 16 x 16 x 64
+        处理层_38：activation_11
+    数据层_38：矩阵形状:            N x 16 x 16 x 64
+        处理层_39：conv2d_14    卷积核形状:       64 x 3 x 3 x 64 / 1
+    数据层_39：矩阵形状:            N x 16 x 16 x 64
+    
+resnet_layer_12    
+        处理层_40：batch_normalization_12
+    数据层_40：矩阵形状:            N x 16 x 16 x 64
+        处理层_41：activation_12
+    数据层_41：矩阵形状:            N x 16 x 16 x 64
+        处理层_42：conv2d_15    卷积核形状:       64 x 1 x 1 x 128 / 1
+    数据层_42：矩阵形状:            N x 16 x 16 x 128
+    
+shortcut_4
+        处理层_43：add_4        把数据层_42、数据层_33相加
+    数据层_43：矩阵形状：           N x 16 x 16 x 128
+
+resnet_layer_13    
+        处理层_44：batch_normalization_13
+    数据层_44：矩阵形状:            N x 16 x 16 x 128
+        处理层_45：activation_13
+    数据层_45：矩阵形状:            N x 16 x 16 x 128
+        处理层_46：conv2d_16    卷积核形状:       128 x 1 x 1 x 128 / 2
+    数据层_46：矩阵形状:            N x 8 x 8 x 128    
+
+resnet_layer_14    
+        处理层_47：batch_normalization_14
+    数据层_47：矩阵形状:            N x 8 x 8 x 128
+        处理层_48：activation_14
+    数据层_48：矩阵形状:            N x 8 x 8 x 128
+        处理层_49：conv2d_17    卷积核形状:     128 x 3 x 3 x 128 / 1
+    数据层_49：矩阵形状:            N x 8 x 8 x 128
+
+resnet_layer_15    
+        处理层_50：batch_normalization_15
+    数据层_50：矩阵形状:            N x 8 x 8 x 128
+        处理层_51：activation_15
+    数据层_51：矩阵形状:            N x 8 x 8 x 128
+        处理层_52：conv2d_18    卷积核形状:     128 x 1 x 1 x 256 / 1
+    数据层_52：矩阵形状:            N x 8 x 8 x 256
+         
+shortcut_5
+        处理层_53：route_3          取数据层_43
+    数据层_53：矩阵形状:            N x 16 x 16 x 128    
+        处理层_54：conv2d_19    卷积核形状：      128 x 1 x 1 x 256 / 2
+    数据层_54：矩阵形状:            N x 8 x 8 x 256
+        处理层_55：add_5        把数据层_54、数据层_52相加
+    数据层_55：矩阵形状：           N x 8 x 8 x 256    
+    
+resnet_layer_16    
+        处理层_56：batch_normalization_16
+    数据层_56：矩阵形状:            N x 8 x 8 x 256 
+        处理层_57：activation_16
+    数据层_57：矩阵形状:            N x 8 x 8 x 256 
+        处理层_58：conv2d_20    卷积核形状:     256 x 1 x 1 x 128 / 1
+    数据层_58：矩阵形状:            N x 8 x 8 x 128 
+
+resnet_layer_17
+        处理层_59：batch_normalization_17
+    数据层_59：矩阵形状:            N x 8 x 8 x 128
+        处理层_60：activation_17
+    数据层_60：矩阵形状:            N x 8 x 8 x 128 
+        处理层_61：conv2d_21    卷积核形状:     128 x 3 x 3 x 128 / 1
+    数据层_61：矩阵形状:            N x 8 x 8 x 128
+
+resnet_layer_18
+        处理层_62：batch_normalization_18
+    数据层_62：矩阵形状:            N x 8 x 8 x 128
+        处理层_63：activation_18
+    数据层_63：矩阵形状:            N x 8 x 8 x 128 
+        处理层_64：conv2d_22    卷积核形状:     128 x 1 x 1 x 256 / 1
+    数据层_64：矩阵形状:            N x 8 x 8 x 256
+
+shortcut_6
+        处理层_62：add_6        把数据层_64、数据层_55相加
+    数据层_62：矩阵形状：           N x 8 x 8 x 256
+    
+classifier
+        处理层_63：batch_normalization_19
+    数据层_63：矩阵形状：           N x 8 x 8 x 256
+        处理层_64：activation_19
+    数据层_64：矩阵形状：           N x 8 x 8 x 256
+        处理层_65：average_pooling2d_1
+    数据层_65：矩阵形状：           N x 1 x 1 x 256
+        处理层_66：flatten_1
+    数据层_66：矩阵形状：           N x 256
+        处理层_67：dense_1
+    数据层_67：矩阵形状：           N x 10
+    

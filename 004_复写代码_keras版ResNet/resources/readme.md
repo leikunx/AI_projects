@@ -3,7 +3,7 @@
 
 ## 下载链接
 * 读者需要在百度云盘下载压缩文件`004_resources.zip`
-* 下载链接:
+* 下载链接: https://pan.baidu.com/s/1EQ5Yhg9k0AHPkrhjXMjGFQ 提取码: 9863
 
 ## 解压后示意图
 压缩文件解压后，文件夹`resources`中应该如下图所示：

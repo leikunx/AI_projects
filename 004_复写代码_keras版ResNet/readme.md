@@ -29,7 +29,10 @@
     * c. Conv共18层+Dense2层
     
 6. ResNet_v2与ResNet_v1的区别
-
+    * 6.1 朗读ResNet_v1论文部分内容的翻译结果
+    * 6.2 朗读ResNet_v2论文部分内容的翻译结构
+    * 6.3 查看网上别人对于ResNet_v1和ResNet_v2区别的见解
+    
 7. python的生成器与keras.preprocessing.image文件的ImageDataGenerator类的关系：
     * 7.1 举例python代码实现最简单的生成器
     * 7.2 生成器的作用
@@ -57,3 +60,4 @@
 12. 如何用matplotlib库展示模型测试结果   
     * 12.1 随机选取100张图片并展示识别结果。
     * 12.1 随机选取100张图片的同时，要求10个类别，每个类别取10张。
+    

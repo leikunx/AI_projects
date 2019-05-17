@@ -1,2 +1,2 @@
-jupyter notebook "_02_resnet20_v2.ipynb"
+jupyter notebook "_03_resnet20_v2.ipynb"
 pause

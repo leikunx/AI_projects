@@ -1,4 +1,4 @@
-ResNet网络架构
+用于数据集cifar10的图像分类网络ResNet20v2架构
 
     处理层_0: 输入层，调用keras.layers中的Input类，通过传递参数shape实例化对象
     数据层_0：矩阵形状：              N x 32 x 32 x 3

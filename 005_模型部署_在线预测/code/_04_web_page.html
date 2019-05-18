@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>detect_cifar10_one_image</title>
+    </head>
+    <body>
+        <div>
+            <form method="post" action="http://localhost:5000/upload_image" enctype="multipart/form-data">
+            <input type="file" size="22" id="select_files" name="input_image" onchange="show_selectedImage()"/>
+            <br>
+             <canvas id="image_canvas" width=32 height=32></canvas>
+             <text name="image_className" value="">
+            <br>
+            <input type="submit" class="button-new" value="提交信息" style="margin-top:15px;"/>
+            </form>
+            <script type="text/javascript">
+                function show_selectedImage(){
+                    /// get select files.
+                    var selected_files = document.getElementById("select_files").files;
+                    for(var file of selected_files){
+                        console.log(file.webkitRelativePath);
+                        /// read file content.
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onloadend = function(){
+                            /// deal data.
+                            var img = new Image();
+                            /// after loader, result storage the file content result.
+                            img.src = this.result; 
+                            img.onload = function(){
+                                var canvas = document.getElementById("image_canvas");
+                                var cxt = canvas.getContext('2d');
+                                cxt.drawImage(img, 0, 0);
+                            }
+                        }
+                    }
+                }
+            </script>
+        </div>
+    </body>
+</html>

@@ -1,14 +1,14 @@
 # 目标检测实践_Keras版YOLOv3训练自己的数据
 这篇文章介绍了如何使用Keras版YOLOv3训练自己的数据，搭配大量的图片和说明。
 
-## 致谢声明
-1. 本文学习`Patrick_Lxc`的博客《[Keras/Tensorflow+python+yolo3训练自己的数据集](https://blog.csdn.net/Patrick_Lxc/article/details/80615433)》并优化其中代码。
-2. 本文学习`qqwweee`的github工程《[keras-yolo3](https://github.com/qqwweee/keras-yolo3)》并优化其中代码。
+## 致谢
+1. 本文学习`qqwweee`的github工程《[keras-yolo3](https://github.com/qqwweee/keras-yolo3 )》并优化其中代码。
+2. 本文学习`Patrick_Lxc`的博客《[Keras/Tensorflow+python+yolo3训练自己的数据集](https://blog.csdn.net/Patrick_Lxc/article/details/80615433 )》并优化其中代码。
 
 ## 配置代码运行环境
 ### 硬件配置要求
 * YOLOv3对于电脑的显卡要求高，根据本文作者的经验，至少需要8GB的显存才能继续本文下面的实验。
-* 只有Nvidia品牌的显卡可以运行深度学习，AMD品牌的显卡不可以运行深度学习。
+* 只有Nvidia品牌的显卡可以运行深度学习，**AMD品牌的显卡不可以运行深度学习**。
 * 那么Nvidia品牌具有8GB显存的最低价格显卡的型号为GTX1070。
 * 2019年2月28日查询，京东上原装GTX1070的价格为2800元左右。
 * 2019年2月28日查询，淘宝上网吧二手拆机显卡GTX1070的价格为1800元左右。
@@ -30,147 +30,50 @@
 * 有显卡之后需要配置深度学习环境，请阅读我的另一篇文章《[深度学习环境搭建-CUDA9.0、cudnn7.3、tensorflow_gpu1.10的安装](https://www.jianshu.com/p/4ebaa78e0233)》
 
 ## 1.数据准备
-### 1.1 数据下载
-* 如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
-* 本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类。数据集压缩文件`n01440764.tar`下载链接: https://pan.baidu.com/s/1NksESNqBX--YqMJ4zptGdw 提取码: 6p3u
-* 本文作者在桌面中创建文件夹`keras_YOLOv3`，并将下载好的数据集压缩文件`n01440764.tar`放到其中，如下图所示：
-![](markdown_images/image01.png)
 
-在文件夹`keras_YOLOv3`中鼠标右击，在显示的菜单中选择`Open in Terminal`，即在文件夹`keras_YOLOv3`中打开Terminal。
-作为合格的Ubuntu系统使用者，要求会使用终端Terminal中的命令完成操作。
-运行命令`mkdir n01440764`创建文件夹`n01440764`。
-运行命令`tar -xvf n01440764.tar -C n01440764`完成压缩文件的解压，命令其中的-C参数后面必须为已经存在的文件夹，否则运行命令会报错。
-解压完成后，文件夹和终端Terminal中的情况如下图所示：
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-b9e8d85ddca9262e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+### 1.1 下载资源
+* 阅读[resources/readme.md](resources/)，并完成其中内容。
+* 如果读者有自己已经使用labelImg软件标注好的数据，可以直接跳到1.4节图片压缩。
+* 本文作者给读者演示的图片数据是来自ImageNet中的鲤鱼分类，对应数据集文件夹`resources/n01440764`
 
 ### 1.2 在Ubuntu中安装软件labelImg
-需要使用软件labelImg做图片的数据标注。
-软件labelImg的下载地址：https://github.com/tzutalin/labelImg，页面如下图所示：
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-9b519422f3d4cfbc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-在文件夹`keras_YOLOv3`中打开Terminal，运行下列命令：
-1.加快apt-get命令的下载速度，需要做Ubuntu系统的换源。方法如下：
-在Ubuntu的设置Settings中选择`Software & Updates`，将Download from的值设置为`http://mirrors.aliyun.com/ubuntu`，如下图所示：
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-fd1c45d95349004e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-2.运行命令`wget https://codeload.github.com/tzutalin/labelImg/zip/master -O labelImg-master.zip`从github上下载labelImg的源码压缩文件。
-3.运行命令`unzip labelImg-master.zip`完成压缩文件的解压。
-4.运行命令`sudo apt-get install pyqt5-dev-tools`安装软件pyqt5-dev-tools。
-5.运行命令`cd labelImg-master`进入文件夹labelImg-master。
-6.运行命令`pip install -r requirements/requirements-linux-python3.txt`安装软件labelImg运行时需要的库，如果已经安装Anaconda此步可能不用进行。如果pip下载库的速度慢，请查看我的另外一篇文章《pip换源》，
-链接：https://www.jianshu.com/p/46c17698bd4b
-7.运行命令`make qt5py3`编译产生软件labelImg运行时需要的组件。
-8.运行命令`python labelImg.py`运行代码文件labelImg.py，运行结果如下图所示：
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-9d31fc88c5a8467e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+需要使用软件labelImg做图片的数据标注，软件labelImg所在文件夹路径：`resources/labelImg-master`
+1. 加快apt-get命令的下载速度，需要做Ubuntu系统的换源。方法如下：
+    * 在Ubuntu的设置Settings中选择`Software & Updates`，将Download from的值设置为`http://mirrors.aliyun.com/ubuntu`，如下图所示：
+    ![Ubuntu换源截图](markdown_images/01.jpg)
+2. 在文件夹`resources/labelImg-master`中打开Terminal
+3. Terminal运行命令`sudo apt-get install pyqt5-dev-tools`安装软件pyqt5-dev-tools。
+4. Terminal运行命令`pip install -r requirements/requirements-linux-python3.txt`安装软件labelImg运行时需要的库。
+    * 如果pip下载库的速度慢，请查看我的另外一篇文章《[pip换源](https://www.jianshu.com/p/46c17698bd4b )》
+5. Terminal运行命令`make qt5py3`编译产生软件labelImg运行时需要的组件。
+6. Terminal运行命令`python labelImg.py`运行代码文件labelImg.py，运行结果如下图所示：
+    ![软件labelImg界面截图](markdown_images/02.jpg)
 
 ### 1.3 获取像素足够的图片
-因为文件夹`n01440764`中有一部分图片像素不足416 * 416，不利于模型训练，所以本节内容有必要进行。
-新建一个代码文件generate_qualified_images.py或generate_qualified_images.ipynb，将下面一段代码复制到其中。
-运行代码可以完成2个功能：
-1.可以选取文件夹`n01440764`中的200张像素足够的图片；
-2.将选取的图片复制到在新文件夹`selected_images`中。
-```python
-import os
-import random
-from PIL import Image
-import shutil
-
-# 获取文件夹中的文件路径
-def getFilePathList(dirPath, partOfFileName=''):
-    allFileName_list = list(os.walk(dirPath))[0][2]
-    fileName_list = [k for k in allFileName_list if partOfFileName in k]
-    filePath_list = [os.path.join(dirPath, k) for k in fileName_list]
-    return filePath_list
-
-# 获取一部分像素足够，即长，宽都大于416的图片
-def generate_qualified_images(dirPath, sample_number, new_dirPath):
-    jpgFilePath_list = getFilePathList(dirPath, '.JPEG')
-    random.shuffle(jpgFilePath_list)
-    if not os.path.isdir(new_dirPath):
-        os.makedirs(new_dirPath)
-    i = 0
-    for jpgFilePath in jpgFilePath_list:
-        image = Image.open(jpgFilePath)
-        width, height = image.size
-        if width >= 416 and height >= 416:
-            i += 1
-            new_jpgFilePath = os.path.join(new_dirPath, '%03d.jpg' %i)
-            shutil.copy(jpgFilePath, new_jpgFilePath)
-        if i == sample_number:
-            break
-
-# 获取数量为100的合格样本存放到selected_images文件夹中
-generate_qualified_images('n01440764', 200, 'selected_images')
-```
+* 原始图片数据文件夹`resources/n01440764`中有大多数图片像素低于416x416，像素低的图片不利于模型的学习，所以需要选出像素足够的图片。
+* 使用代码文件`code/_01_select_images.py`选出像素足够的图片。
+1. 在文件夹`code`中打开Terminal
+2. Terminal运行命令`python _01_select_images.py`
 
 ### 1.4 数据标注 
-数据标注是一件苦力活，本文作者标记200张图片花费90分钟左右。
-本节演示单张图片的标注。
-如下图红色箭头标记处所示，打开数据集文件夹。
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-12c997baad4d121d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-如下图红色箭头标记处所示，选择文件夹`keras_YOLOv3`中的文件夹`selected_images`，选中后点击如下图下方红色箭头标记处所示的Choose按钮。
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-2472662195c192af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-如下图红色箭头标记处所示，给这张图标记了2个物体：人脸human_face、鱼fish
-在软件labelImg界面中，按w键即可开始标记物体。
-![image.png](https://upload-images.jianshu.io/upload_images/10345471-4b15839c6422ab4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-本文作者标注好200张图片，上传到百度云盘，便于读者直接复现。
-下载链接: https://pan.baidu.com/s/1-bZ5B5JKFB7R6aWUPBdP_w 提取码: 9rjg
+* 数据标注是一件苦力活，本文作者标记200张图片花费90分钟左右。
+* 本节演示单张图片的标注，如下图红色箭头标记处所示，首先点击`Open Dir`
+![数据标注示意图1](markdown_images/03.jpg)
+选中图片文件所在的文件夹，选中后点击下图下方红色箭头标记处所示的Choose按钮，则软件labelImg加载图片。
+![数据标注示意图2](markdown_images/04.jpg)
+* 在软件labelImg界面中，按w键即可开始标注物体。
+* 如下图红色箭头标记处所示，给这张图标注了2个物体：人脸human_face、鱼fish
+![数据标注示意图3](markdown_images/05.jpg)
+本文作者标注好200张图片，在文件夹`resources/selected_images`
 
+### 1.5 检查标注文件
+* 使用代码文件`code/_02_check_labels.py`检查标注。
+1. 在文件夹`code`中打开Terminal
+2. Terminal运行命令`python _02_check_labels.py`
 
-### 1.5 检查标注数据
-新建一个代码文件check_annotations.py或check_annotations.ipynb，将下面一段代码复制到其中。
-运行代码可以完成2个功能：
-1.检查代码检查标记好的文件夹是否有图片漏标
-2.检查标记的xml文件中是否有物体标记类别拼写错误
-```python
-#获取文件夹中的文件路径
-import os
-def getFilePathList(dirPath, partOfFileName=''):
-    allFileName_list = list(os.walk(dirPath))[0][2]
-    fileName_list = [k for k in allFileName_list if partOfFileName in k]
-    filePath_list = [os.path.join(dirPath, k) for k in fileName_list]
-    return filePath_list
-
-#此段代码检查标记好的文件夹是否有图片漏标
-def check_1(dirPath):
-    jpgFilePath_list = getFilePathList(dirPath, '.jpg')
-    allFileMarked = True
-    for jpgFilePath in jpgFilePath_list:
-        xmlFilePath = jpgFilePath[:-4] + '.xml'
-        if not os.path.exists(xmlFilePath):
-            print('%s this picture is not marked.' %jpgFilePath)
-            allFileMarked = False
-    if allFileMarked:
-        print('congratulation! it is been verified that all jpg file are marked.')
-
-#此段代码检查标记的xml文件中是否有物体标记类别拼写错误        
-import xml.etree.ElementTree as ET
-def check_2(dirPath, className_list):
-    className_set = set(className_list)
-    xmlFilePath_list = getFilePathList(dirPath, '.xml')
-    allFileCorrect = True
-    for xmlFilePath in xmlFilePath_list:
-        with open(xmlFilePath) as file:
-            fileContent = file.read()
-        root = ET.XML(fileContent)
-        object_list = root.findall('object')
-        for object_item in object_list:
-            name = object_item.find('name')
-            className = name.text
-            if className not in className_set:
-                print('%s this xml file has wrong class name "%s" ' %(xmlFilePath, className))
-                allFileCorrect = False
-    if allFileCorrect:
-        print('congratulation! it is been verified that all xml file are correct.')
-
-if __name__ == '__main__':
-    dirPath = 'selected_images'
-    className_list = ['fish', 'human_face']
-    check_1(dirPath)
-    check_2(dirPath, className_list)
-```
-
-### 1.6 图像压缩
-预先压缩好图像，模型训练时不用再临时改变图片大小，或许可以加快模型训练速度。
-新建一个代码文件compress_images.py或compress_images.ipynb，将下面一段代码复制到其中。
+### 1.6 压缩图像大小
+* 预先改变图像大小，模型训练时不用临时改变图片大小，可以加快模型训练速度、提高模型准确率。
+* 使用代码文件`code/_03_compress_images`
 运行代码可以完成2个功能：
 1.将旧文件夹中的jpg文件压缩后放到新文件夹中。
 2.将旧文件夹中的jpg文件对应的xml文件修改后放到新文件夹中。

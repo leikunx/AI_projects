@@ -24,7 +24,7 @@ def get_colorList(category_quantity):
         hsv = (hue, saturation, value)
         hsv_list.append(hsv)
     colorFloat_list = [colorsys.hsv_to_rgb(*k) for k in hsv_list]
-    color_list = [[int(x * 255) for x in k] for k in colorFloat_list]
+    color_list = [tuple([int(x * 255) for x in k]) for k in colorFloat_list]
     return color_list
     
 

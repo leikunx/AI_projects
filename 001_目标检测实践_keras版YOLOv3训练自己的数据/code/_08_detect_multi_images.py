@@ -10,7 +10,7 @@ import numpy as np
 # 获取文件夹中的文件路径
 def get_filePathList(dirPath, partOfFileName=''):
     all_fileName_list = next(os.walk(dirPath))[2]
-    fileName_list = [k for k in allFileName_list if partOfFileName in k]
+    fileName_list = [k for k in all_fileName_list if partOfFileName in k]
     filePath_list = [os.path.join(dirPath, k) for k in fileName_list]
     return filePath_list
 
@@ -25,7 +25,7 @@ def detect_multi_images(weights_h5FilePath, imageFilePath_list, out_aviFilePath=
     cv2.resizeWindow(windowName, width, height)
     if out_aviFilePath is not None:
         fourcc = cv2.VideoWriter_fourcc('M', 'P', 'E', 'G')
-        videoWriter = cv2.VideoWriter(out_aviFilePath, fourcc, 2, display_size)
+        videoWriter = cv2.VideoWriter(out_aviFilePath, fourcc, 1.3, display_size)
     for imageFilePath in imageFilePath_list:
         image = Image.open(imageFilePath)
         out_image = yolo_model.detect_image(image)
@@ -34,7 +34,7 @@ def detect_multi_images(weights_h5FilePath, imageFilePath_list, out_aviFilePath=
         #图片第1维是宽，第2维是高，第3维是RGB
         #PIL库图片第三维是RGB，cv2库图片第三维正好相反，是BGR
         cv2.imshow(windowName, resized_image_ndarray[..., ::-1])
-        if out_videoFilePath is not None:
+        if out_aviFilePath is not None:
             videoWriter.write(resized_image_ndarray[..., ::-1])
         # 第1次按空格键可以暂停检测，第2次按空格键继续检测
         pressKey = cv2.waitKey(500)
@@ -65,5 +65,5 @@ if __name__ == '__main__':
     image_suffix = argument_namespace.image_suffix
     weights_h5FilePath = argument_namespace.weights_h5FilePath
     imageFilePath_list = get_filePathList(dirPath, image_suffix)
-    out_aviFilePath = 'fish_output_2.avi'
+    out_aviFilePath = '../resources/fish_output_2.avi'
     detect_multi_images(weights_h5FilePath, imageFilePath_list, out_aviFilePath)

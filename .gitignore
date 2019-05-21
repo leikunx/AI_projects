@@ -2,6 +2,7 @@
 *.bmp
 *.xml
 *.png
+*.gif
 *.weights
 *.h5
 logs/
@@ -11,7 +12,7 @@ resources/
 __pycache__/
 *.py[cod]
 *$py.class
-
+.swp
 # C extensions
 *.so
 

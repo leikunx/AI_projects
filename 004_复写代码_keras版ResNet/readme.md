@@ -1,3 +1,11 @@
+# 复写代码_keras版ResNet
+
+## 下载资源
+阅读[resources/readme.md](resources/)，并完成其中内容。
+根据讲解视频学习知识点，并且完成实践内容。
+学习第5个知识点：ResNet20_v2网络架构的梳理，即查看文件[第5题_ResNet20v2网络结构.txt](第5题_ResNet20v2网络结构.txt)
+
+## 
 知识点列举如下，主要是代码细节：
 1. keras如何加载cifar10数据集，即下面3个代码细节：
     * 1.1 keras.dataset.cifar10代码文件中的load_data；

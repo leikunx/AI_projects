@@ -10,3 +10,6 @@
 ![资源文件夹下载后示意图](../markdown_images/01.jpg)
 
 ## 讲解视频资源
+下面2个链接是相同的讲解视频
+百度云盘下载链接: https://pan.baidu.com/s/1rvLhHvKnd6XUciBkydAuqQ 提取码: 85sf
+bilibili在线观看链接：https://www.bilibili.com/video/av52768866

@@ -25,7 +25,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../resources/images_416x416')    
     parser.add_argument('-s', '--suffix', type=str, default='.jpg')
-    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/className_list.txt')
+    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/category_list.txt')
     argument_namespace = parser.parse_args()
     return argument_namespace  
     

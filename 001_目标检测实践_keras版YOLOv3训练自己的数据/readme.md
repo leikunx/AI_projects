@@ -43,14 +43,14 @@
 需要使用软件labelImg做图片的数据标注，软件labelImg所在文件夹路径：`resources/labelImg-master`
 1. 加快apt-get命令的下载速度，需要做Ubuntu系统的换源。方法如下：
     * 在Ubuntu的设置Settings中选择`Software & Updates`，将Download from的值设置为`http://mirrors.aliyun.com/ubuntu`，如下图所示：
-    ![Ubuntu换源截图](markdown_images/01.jpg)
+    ![Ubuntu换源截图](markdown_images/01.png)
 2. 在文件夹`resources/labelImg-master`中打开Terminal
 3. Terminal运行命令`sudo apt-get install pyqt5-dev-tools`安装软件pyqt5-dev-tools。
 4. Terminal运行命令`pip install -r requirements/requirements-linux-python3.txt`安装软件labelImg运行时需要的库。
     * 如果pip下载库的速度慢，请查看我的另外一篇文章《[pip换源](https://www.jianshu.com/p/46c17698bd4b )》
 5. Terminal运行命令`make qt5py3`编译产生软件labelImg运行时需要的组件。
 6. Terminal运行命令`python labelImg.py`运行代码文件labelImg.py，运行结果如下图所示：
-    ![软件labelImg界面截图](markdown_images/02.jpg)
+    ![软件labelImg界面截图](markdown_images/02.png)
 
 ### 1.3 选出像素足够的图片
 * 原始图片数据文件夹`resources/n01440764`中有大多数图片像素低于416x416，像素低的图片不利于模型的学习，所以需要选出像素足够的图片。
@@ -61,12 +61,12 @@
 ### 1.4 数据标注 
 * 数据标注是一件苦力活，本文作者标记200张图片花费90分钟左右。
 * 本节演示单张图片的标注，如下图红色箭头标记处所示，首先点击`Open Dir`
-![数据标注示意图1](markdown_images/03.jpg)
+![数据标注示意图1](markdown_images/03.png)
 * 选中图片文件所在的文件夹，选中后点击下图下方红色箭头标记处所示的Choose按钮，则软件labelImg加载图片。
-![数据标注示意图2](markdown_images/04.jpg)
+![数据标注示意图2](markdown_images/04.png)
 * 在软件labelImg界面中，按w键即可开始标注物体。
 * 如下图红色箭头标记处所示，给这张图标注了2个物体：人脸human_face、鱼fish
-![数据标注示意图3](markdown_images/05.jpg)
+![数据标注示意图3](markdown_images/05.png)
 * 本文作者标注好200张图片，在文件夹`resources/selected_images`
 
 ### 1.5 检查标注文件
@@ -94,7 +94,7 @@
 1. 在文件夹`code`中打开Terminal
 2. Terminal运行命令`python _05_train.py`
 * 本文作者的显卡为Nvidia RTX2070，从图中下方红色方框处可以看出每个epoch需要大约15秒，则200个epoch约1个小时能够运行完成。
-![模型训练截图](markdown_images/06.jpg)
+![模型训练截图](markdown_images/06.png)
 * 本篇文章模型训练需要较长时间，建议读者将epoch设置为2000后，放到晚上运行。
 调整模型训练的轮次epochs需要修改代码文件`train.py`的第85行fit_generator方法中的参数，即第90行参数epochs的值。
 
@@ -109,7 +109,7 @@
     * 第2个代码块加载测试集文本文件`dataset_test.txt`，并取出其中的图片路径赋值给变量jpgFilePath_list；
     * 第3个代码块是根据图片路径打开图片后，调用YOLO对象的detect_image方法对图片做目标检测。
 * 运行结果如下图所示：
-* ![单张图片测试截图](markdown_images/07.jpg)
+* ![单张图片测试截图](markdown_images/07.png)
 
 ### 3.2 视频目标检测
 
@@ -117,7 +117,7 @@
 1. 在文件夹`resources`中打开Terminal
 2. 在Terminal运行命令`sudo apt-get install ffmpeg`安装软件ffmpeg
     * 安装软件ffmpeg成功如下图所示：
-    ![安装ffmpeg成功截图](markdown_images/08.jpg)
+    ![安装ffmpeg成功截图](markdown_images/08.png)
 3. 继续在此Terminal中运行命令`ffmpeg -start_number 1 -r 1 -i images_416x416/%03d.jpg -vcodec mpeg4 ./1.mp4`，请读者确保当前Terminal所在目录中有文件夹`images_416x416`。
 * ffmpeg命令参数解释：
     * 1.-start_number，配合参数-i使用，默认为0，表示%03d索引开始的数字；
@@ -126,7 +126,7 @@
     * 4.-vcodec，视频编码格式，mpeg4为常用的视频编码。
     * 5.命令的最后，是输出文件路径
 * 运行结果如下图所示：
-![运行ffmpeg命令结果截图](markdown_images/09.jpg)
+![运行ffmpeg命令结果截图](markdown_images/09.png)
 
 #### 3.2.2 调用代码文件yolo_video.py
 * 使用代码文件`code/yolo_video.py`做视频的目标检测
@@ -137,7 +137,7 @@
 * 如果不人为干预，完成1帧图片的目标检测后立即开始下1帧，速度过快，人眼看不清楚。
 * 代码文件`_06_yolo.py`的第183行，使完成1帧的目标检测后停止0.5秒，这样检测结果动画的速度能够易于人眼接受。
 * 视频检测的动画效果如下图所示：
-！[视频检测动画效果](markdown_images/10.gif)
+![视频检测动画效果](markdown_images/10.gif)
 
 ### 3.3 多张图片目标检测
 * 本节内容是将3.1节和3.2节内容结合起来，直接读取文件夹的若干图片做目标检测并展示为视频效果。

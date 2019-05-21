@@ -50,18 +50,18 @@ class YoloModel(object):
     def __init__(self, **kwargs):
         self.__dict__.update(self.defaults) # set up default values
         self.__dict__.update(kwargs) # and update with user overrides
-        self.className_list = self.get_categoryList()
+        self.category_list = self.get_categoryList()
         self.anchor_ndarray = self.get_anchorNdarray()
         self.session = K.get_session()
         self.boxes, self.scores, self.classes = self.generate()
     
-    # 从文本文件中解析出物体种类列表className_list，要求每个种类占一行
+    # 从文本文件中解析出物体种类列表category_list，要求每个种类占一行
     def get_categoryList(self):
         with open(self.category_txtFilePath, 'r', encoding='utf8') as file:
             fileContent = file.read()
         line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
-        className_list= sorted(line_list, reverse=False)
-        return className_list    
+        category_list= sorted(line_list, reverse=False)
+        return category_list    
     
     # 从表示anchor的文本文件中解析出anchor_ndarray
     def get_anchorNdarray(self):
@@ -74,13 +74,13 @@ class YoloModel(object):
     def generate(self):
         # 在Keras中，如果模型训练完成后只保存了权重，那么需要先构建网络，再加载权重
         num_anchors = len(self.anchor_ndarray)
-        num_classes = len(self.className_list)
+        num_classes = len(self.category_list)
         self.yolo_model = yolo_body(Input(shape=(None, None, 3)),
                                     num_anchors//3,
                                     num_classes)
         self.yolo_model.load_weights(self.weights_h5FilePath)
         # 给不同类别的物体准备不同颜色的方框
-        category_quantity = len(self.className_list)
+        category_quantity = len(self.category_list)
         self.color_list = get_colorList(category_quantity)
         # 目标检测的输出：方框box,得分score，类别class
         self.input_image_size = K.placeholder(shape=(2, ))
@@ -114,7 +114,7 @@ class YoloModel(object):
         # 循环绘制若干个方框
         for i, c in enumerate(out_classes):
             # 定义方框上方文字内容
-            predicted_class = self.className_list[c]
+            predicted_class = self.category_list[c]
             score = out_scores[i]
             label = '{} {:.2f}'.format(predicted_class, score)
             # 调用ImageDraw.Draw方法实例化画图对象

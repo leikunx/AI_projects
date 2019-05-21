@@ -1,8 +1,8 @@
 # 获取文件夹中的文件路径
 import os
 def get_filePathList(dirPath, partOfFileName=''):
-    allFileName_list = next(os.walk(dirPath))[2]
-    fileName_list = [k for k in allFileName_list if partOfFileName in k]
+    all_fileName_list = next(os.walk(dirPath))[2]
+    fileName_list = [k for k in all_fileName_list if partOfFileName in k]
     filePath_list = [os.path.join(dirPath, k) for k in fileName_list]
     return filePath_list
 
@@ -101,7 +101,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../resources/selected_images')
     parser.add_argument('-s', '--suffix', type=str, default='.jpg')
-    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/className_list.txt')
+    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/category_list.txt')
     argument_namespace = parser.parse_args()
     return argument_namespace      
     

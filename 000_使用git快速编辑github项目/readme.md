@@ -1,4 +1,4 @@
-3# 使用git快速编辑github项目
+# 使用git快速编辑github项目
 ## 下载资源
 阅读[resources/readme.md](resources/)，并完成其中内容。
 其中内容为Git2.21.0的安装教程。

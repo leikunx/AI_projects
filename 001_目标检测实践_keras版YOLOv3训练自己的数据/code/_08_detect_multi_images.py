@@ -34,7 +34,7 @@ def detect_multi_images(modelFilePath, jpgFilePath_list, out_videoFilePath=None)
         if out_videoFilePath is not None:
             videoWriter.write(resized_image_ndarray[..., ::-1])
         # 第1次按空格键可以暂停检测，第2次按空格键继续检测
-        pressKey = cv2.waitKey(400)
+        pressKey = cv2.waitKey(500)
         if ord(' ') == pressKey:
             cv2.waitKey(0)
         # 按Esc键或者q键可以退出循环

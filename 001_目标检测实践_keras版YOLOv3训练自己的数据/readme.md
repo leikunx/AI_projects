@@ -109,7 +109,7 @@
     * 第2个代码块加载测试集文本文件`dataset_test.txt`，并取出其中的图片路径赋值给变量jpgFilePath_list；
     * 第3个代码块是根据图片路径打开图片后，调用YOLO对象的detect_image方法对图片做目标检测。
 * 运行结果如下图所示：
-![单张图片测试截图](markdown_images/07.jpg)
+* ![单张图片测试截图](markdown_images/07.jpg)
 
 ### 3.2 视频目标检测
 
@@ -133,9 +133,9 @@
 1. 在文件夹`code`中打开Terminal
 2. Terminal中运行命令`pip install opencv-python`，安装opencv-python库。
 3. Terminal中运行命令`python yolo_video.py --input ../resources/1.mp4 --output ../resources/fish_output.avi`，表示对视频文件`1.mp4`做目标检测，并将检测结果保存为视频文件`fish_output.avi`。
-* YOLOv3模型速度很快，在本案例中检测1张图片只需要0.05秒。
-* 制作视频时每秒设置为1帧，即每秒1张图片。如果不人为干预，完成1帧图片的目标检测后立即开始下1帧，速度过快，人眼看不清楚。
-* 本文作者修改了代码文件`yolo.py`的第176行，使完成1帧的目标检测后停止0.5秒，这样视频的展示效果能够易于人眼接受。
+* YOLOv3模型的检测速度很快，在本案例中检测1张图片只需要0.05秒。
+* 如果不人为干预，完成1帧图片的目标检测后立即开始下1帧，速度过快，人眼看不清楚。
+* 代码文件`_06_yolo.py`的第183行，使完成1帧的目标检测后停止0.5秒，这样检测结果动画的速度能够易于人眼接受。
 
 ### 3.3 多张图片目标检测
 * 本节内容是将3.1节和3.2节内容结合起来，直接读取文件夹的若干图片做目标检测并展示为视频效果。
@@ -143,15 +143,17 @@
 1. 动画展示若干图片的目标检测结果；
 2. 将若干图片的检测结果保存为avi格式的视频文件。
 * 这是用180张图片作为训练集，在1000张同类型图片上的模型测试结果。
-
+* 使用代码文件`code/_08_detect_multi_images.py`做多张图片的目标检测
+1. 在文件夹`code`中打开Terminal
+2. Terminal中运行命令`python _08_detect_multi_images.py`
 
 ## 4.总结
 * 1.本文作者根据1个多月YOLOv3的工作经验，花费3天完成本篇文章的写作，非常易于新手展开目标检测框架YOLOv3的实践。
 * 2.本篇文章的代码集成性强，当读者做好数据准备后，只需要很短的时间即可开始模型训练。
 * 3.本文作者为了学习原作者`qqwweee`的代码，在原作者代码的基础上重新编辑并添加了中文注释，保证模型性能的同时删除了原作者代码中的以下功能：对YOLOv3_tiny的支持、检测时对多GPU的支持。
-4.读者可以先从本文作者已经精简的代码入手，推荐阅读以下5个代码文件：
-文件夹`keras_yolo3-master`中的`generateTxtFile.py`可以生成训练集，测试集文本文件；
-文件夹`keras_yolo3-master`中的`train.py`可以开始模型训练；
-文件夹`keras_yolo3-master`中的`yolo.py`可以实例化YOLO对象用于模型测试；
-文件夹`keras_yolo3-master/yolo3`中的`model.py`是YOLOv3算法原理的实现；
-文件夹`keras_yolo3-master/yolo3`中的`utils.py`类似于工程中的工具包，将YOLOv3算法工程的部分封装函数一起写在里面。
+* 4.读者可以先从本文作者已经精简的代码入手，推荐阅读以下5个代码文件：
+    * 文件夹`keras_yolo3-master`中的`generateTxtFile.py`可以生成训练集，测试集文本文件；
+    * 文件夹`keras_yolo3-master`中的`train.py`可以开始模型训练；
+    * 文件夹`keras_yolo3-master`中的`yolo.py`可以实例化YOLO对象用于模型测试；
+    * 文件夹`keras_yolo3-master/yolo3`中的`model.py`是YOLOv3算法原理的实现；
+    * 文件夹`keras_yolo3-master/yolo3`中的`utils.py`类似于工程中的工具包，将YOLOv3算法工程的部分封装函数一起写在里面。

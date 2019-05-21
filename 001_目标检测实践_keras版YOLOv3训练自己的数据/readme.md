@@ -132,12 +132,14 @@
 * 使用代码文件`code/yolo_video.py`做视频的目标检测
 1. 在文件夹`code`中打开Terminal
 2. Terminal中运行命令`pip install opencv-python`，安装opencv-python库。
-3. Terminal中运行命令`python yolo_video.py --input ../resources/1.mp4 --output ../resources/fish_output.avi`，表示对视频文件`1.mp4`做目标检测，并将检测结果保存为视频文件`fish_output.avi`。
+3. Terminal中运行命令
+    * `python yolo_video.py --input ../resources/1.mp4 --output ../resources/fish_output.avi`
+    * 表示对视频文件`1.mp4`做目标检测，并将检测结果保存为视频文件`fish_output.avi`
 * YOLOv3模型的检测速度很快，在本案例中检测1张图片只需要0.05秒。
 * 如果不人为干预，完成1帧图片的目标检测后立即开始下1帧，速度过快，人眼看不清楚。
 * 代码文件`_06_yolo.py`的第183行，使完成1帧的目标检测后停止0.5秒，这样检测结果动画的速度能够易于人眼接受。
 * 视频检测的动画效果如下图所示：
-![视频检测动画效果](markdown_images/10.gif)
+    * ![视频检测动画效果](markdown_images/10.gif)
 
 ### 3.3 多张图片目标检测
 * 本节内容是将3.1节和3.2节内容结合起来，直接读取文件夹的若干图片做目标检测并展示为视频效果。
@@ -149,15 +151,15 @@
 1. 在文件夹`code`中打开Terminal
 2. Terminal中运行命令`python _08_detect_multi_images.py`
 * 多张图片检测的动画效果如下图所示：
-![多张图片检测动画效果](markdown_images/11.gif)
+    * ![多张图片检测动画效果](markdown_images/11.gif)
 
 ## 4.总结
 * 1.本文作者根据1个多月YOLOv3的工作经验，花费3天完成本篇文章的写作，非常易于新手展开目标检测框架YOLOv3的实践。
 * 2.本篇文章的代码集成性强，当读者做好数据准备后，只需要很短的时间即可开始模型训练。
 * 3.本文作者为了学习原作者`qqwweee`的代码，在原作者代码的基础上重新编辑并添加了中文注释，保证模型性能的同时删除了原作者代码中的以下功能：对YOLOv3_tiny的支持、检测时对多GPU的支持。
 * 4.读者可以先从本文作者已经精简的代码入手，推荐阅读以下5个代码文件：
-    * 文件夹`keras_yolo3-master`中的`generateTxtFile.py`可以生成训练集，测试集文本文件；
-    * 文件夹`keras_yolo3-master`中的`train.py`可以开始模型训练；
-    * 文件夹`keras_yolo3-master`中的`yolo.py`可以实例化YOLO对象用于模型测试；
-    * 文件夹`keras_yolo3-master/yolo3`中的`model.py`是YOLOv3算法原理的实现；
-    * 文件夹`keras_yolo3-master/yolo3`中的`utils.py`类似于工程中的工具包，将YOLOv3算法工程的部分封装函数一起写在里面。
+    * 文件夹`code`中的`_04_generate_txtFile.py`可以生成训练集，测试集文本文件；
+    * 文件夹`code`中的`_05_train.py`可以开始模型训练；
+    * 文件夹`code`中的`_06_yolo.py`可以实例化YOLO对象用于模型测试；
+    * 文件夹`code/yolo3`中的`model.py`是YOLOv3算法的实现；
+    * 文件夹`code/yolo3`中的`utils.py`类似于工程中的工具包，将YOLOv3算法工程的部分封装函数一起写在里面。

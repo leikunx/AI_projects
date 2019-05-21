@@ -1,6 +1,6 @@
 import sys
 import argparse
-from '.06_yolo' import YOLO, detect_video
+from _06_yolo import YOLO, detect_video
 from PIL import Image
 
 def detect_img(yolo):

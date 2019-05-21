@@ -99,9 +99,9 @@ def get_classNameList(txtFilePath):
 import argparse
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../download_resources/selected_images')
+    parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../resources/selected_images')
     parser.add_argument('-s', '--suffix', type=str, default='.jpg')
-    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../download_resources/className_list.txt')
+    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/className_list.txt')
     argument_namespace = parser.parse_args()
     return argument_namespace      
     

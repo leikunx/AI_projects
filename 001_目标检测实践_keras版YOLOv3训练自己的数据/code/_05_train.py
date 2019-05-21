@@ -114,7 +114,7 @@ def parse_args():
     parser = argparse.ArgumentParser() 
     parser.add_argument('-w', '--width', type=int, default=416)
     parser.add_argument('-he', '--height', type=int, default=416)
-    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../download_resources/className_list.txt')
+    parser.add_argument('-c', '--class_txtFilePath', type=str, default='../resources/className_list.txt')
     parser.add_argument('-a', '--anchorFilePath', type=str, default='./model_data/yolo_anchors.txt')
     argument_namespace = parser.parse_args()
     return argument_namespace  

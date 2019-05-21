@@ -12,9 +12,9 @@ from yolo3.utils import letterbox_image
 # 定义类YOLO
 class YOLO(object):
     defaults = {
-        "modelFilePath": 'saved_model/trained_weights.h5',
+        "modelFilePath": '../resources/trained_weights.h5',
         "anchorFilePath": 'model_data/yolo_anchors.txt',
-        "classFilePath": '../download_resources/className_list.txt',
+        "classFilePath": '../resources/className_list.txt',
         "score" : 0.3,
         "iou" : 0.35,
         "model_image_size" : (416, 416) #must be a multiple of 32
@@ -42,7 +42,7 @@ class YOLO(object):
             fileContent = file.read()
         line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
         className_list= sorted(line_list, reverse=False)
-    return className_list    
+        return className_list    
     
     # 从表示anchor的文本文件中解析出anchor_ndarray
     def get_anchorNdarray(self):

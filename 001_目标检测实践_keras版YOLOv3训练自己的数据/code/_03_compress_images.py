@@ -73,7 +73,7 @@ def batch_imageCompress(old_dirPath, new_dirPath, new_size, suffix):
 import argparse
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../download_resources/selected_images')    
+    parser.add_argument('-d', '--dirPath', type=str, help='文件夹路径', default='../resources/selected_images')    
     parser.add_argument('-w', '--width', type=int, default=416)
     parser.add_argument('-he', '--height', type=int, default=416)
     parser.add_argument('-s', '--suffix', type=str, default='.jpg')
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     width = argument_namespace.width
     height = argument_namespace.height
     new_size = (width, height)
-    new_dirPath = '../download_resources/images_%sx%s' %(str(width), str(height))
+    new_dirPath = '../resources/images_%sx%s' %(str(width), str(height))
     suffix = argument_namespace.suffix
     batch_imageCompress(old_dirPath, new_dirPath, new_size, suffix)
     print('所有图片文件都已经完成压缩')

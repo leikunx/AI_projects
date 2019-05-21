@@ -26,7 +26,7 @@ def create_model(input_shape,
                  num_classes,
                  load_pretrained=True,
                  freeze_body=False,
-                 weights_path='saved_model/trained_weights.h5'):
+                 weights_h5FilePath='saved_model/trained_weights.h5'):
     K.clear_session() # get a new session
     image_input = Input(shape=(None, None, 3))
     height, width = input_shape
@@ -38,9 +38,9 @@ def create_model(input_shape,
     model_body = yolo_body(image_input, num_anchors//3, num_classes)
     print('Create YOLOv3 model with {} anchors and {} classes.'.format(num_anchors, num_classes))
 
-    if load_pretrained and os.path.exists(weights_path):
-        model_body.load_weights(weights_path, by_name=True, skip_mismatch=True)
-        print('Load weights {}.'.format(weights_path))
+    if load_pretrained and os.path.exists(weights_h5FilePath):
+        model_body.load_weights(weights_h5FilePath, by_name=True, skip_mismatch=True)
+        print('Load weights from this path: {}.'.format(weights_h5FilePath))
         if freeze_body:
             num = len(model_body.layers)-7
             for i in range(num):

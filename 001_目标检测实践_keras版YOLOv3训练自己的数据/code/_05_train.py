@@ -66,7 +66,7 @@ def train(model,
           input_shape,
           anchor_ndarray,
           num_classes,
-          logDirPath='../resources/saved_model/'):
+          logDirPath='../resources/saved_models/'):
     model.compile(optimizer='adam',
                   loss={'yolo_loss': lambda y_true, y_pred: y_pred})
     # 划分训练集和验证集              

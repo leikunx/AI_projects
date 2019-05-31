@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
+# 导入常用的库
+import os
+import time
+import numpy as np
 # 导入keras库
 from keras import backend as K
 from keras.layers import Input
 # 导入yolo3文件夹中mode.py、utils.py这2个代码文件中的方法
 from yolo3.model import yolo_eval, yolo_body
 from yolo3.utils import letterbox_image
-# 导入常用的库
-import os
-import time
-import numpy as np
 # 导入PIL画图库
 from PIL import Image, ImageFont, ImageDraw
 

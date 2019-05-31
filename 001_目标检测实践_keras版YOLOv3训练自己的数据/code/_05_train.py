@@ -1,8 +1,11 @@
+# 导入常用的库
 import os
 import numpy as np
+# 导入keras库
 import keras.backend as K
 from keras.layers import Input, Lambda
 from keras.models import Model
+# 导入yolo3文件夹中mode.py、utils.py这2个代码文件中的方法
 from yolo3.model import preprocess_true_boxes, yolo_body, yolo_loss
 from yolo3.utils import get_random_data
 
@@ -11,7 +14,7 @@ def get_categoryList(txtFilePath):
     with open(txtFilePath, 'r', encoding='utf8') as file:
         fileContent = file.read()
     line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
-    category_list= sorted(line_list, reverse=False)
+    category_list = sorted(line_list, reverse=False)
     return category_list    
 
 # 从表示anchor的文本文件中解析出anchor_ndarray
@@ -26,7 +29,7 @@ def create_model(input_shape,
                  num_classes,
                  load_pretrained=True,
                  freeze_body=False,
-                 weights_h5FilePath='saved_model/trained_weights.h5'):
+                 weights_h5FilePath='../resources/saved_models/trained_weights.h5'):
     K.clear_session() # get a new session
     image_input = Input(shape=(None, None, 3))
     height, width = input_shape
@@ -63,7 +66,7 @@ def train(model,
           input_shape,
           anchor_ndarray,
           num_classes,
-          logDirPath='saved_model/'):
+          logDirPath='../resources/saved_model/'):
     model.compile(optimizer='adam',
                   loss={'yolo_loss': lambda y_true, y_pred: y_pred})
     # 划分训练集和验证集              

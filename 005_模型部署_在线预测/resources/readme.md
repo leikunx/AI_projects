@@ -9,3 +9,8 @@
 压缩文件解压后，文件夹`resources`中应该如下图所示：
 ![资源文件夹下载后示意图](../markdown_images/04.jpg)
 
+## 讲解视频资源
+* 视频文件《2019年6月1日讲解模型部署.mp4》
+* 百度云盘下载链接: https://pan.baidu.com/s/1Kx41bsys7NZY5UHHyu1tFg 提取码: uhkq
+* bilibili网站在线观看链接：https://www.bilibili.com/video/av54324093?pop_share=1
+

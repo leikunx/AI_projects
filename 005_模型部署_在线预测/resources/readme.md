@@ -3,7 +3,7 @@
 
 ## 下载链接
 * 读者需要在百度云盘下载压缩文件`005_resources.zip`
-* 链接：https://pan.baidu.com/s/1kBEm5g9VALoJAJDCio3y6Q 提取码：nnfj 
+* 链接: https://pan.baidu.com/s/1At3gs5kSe7bs1nL8W5U2Fg 提取码: fkwg
 
 ## 解压后示意图
 压缩文件解压后，文件夹`resources`中应该如下图所示：

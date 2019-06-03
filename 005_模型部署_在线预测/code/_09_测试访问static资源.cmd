@@ -1,0 +1,2 @@
+python _09_test_static_server.py
+pause

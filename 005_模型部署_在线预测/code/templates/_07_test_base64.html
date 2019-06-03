@@ -2,24 +2,20 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>实现需求2.2和2.3</title>
+        <title>实现需求3.2</title>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>
             $(document).ready(function(){
-                $("#image_file").change(function(){
-                    var file = $(this)[0].files[0];
-                    $(".img").attr("src", URL.createObjectURL(file));
-                    }); 
                 $("button#button_1").click(function(){
                     var formData = new FormData($("#upload_form")[0]);
                     $.ajax({
-                        url: "/predict_image",
+                        url: "/get_image",
                         type: 'POST',
                         data: formData,
                         processData: false,
                         contentType: false,
                         success: function(return_data){
-                            $("#image_className").text("图片中物体的种类名称：" + return_data["predict_className"])
+                            $("img#image_1").attr("src", "data:image/jpeg;base64," + return_data['imageStream'])
                             },
                         error: function(return_data){
                             alert("上传失败!")
@@ -32,12 +28,11 @@
     
     <body>
         <form id="upload_form" enctype="multipart/form-data">
-            <input type="file" name="input_image" id="image_file"/>
+            <input type="text" name="filePath" value="../resources/images/001.jpg"/>
         </form>
         <div>
-            <img src="" class="img" />
+            <img src="" id="image_1"/>
         </div>
-        <button id="button_1">上传图片并预测</button>
-        <p id="image_className"></p>
+        <button id="button_1">显示服务端中此路径表示的图片</button>
     </body>
 </html>

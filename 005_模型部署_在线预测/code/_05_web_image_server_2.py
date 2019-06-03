@@ -86,14 +86,14 @@ def anyname_you_like():
             os.makedirs(received_dirPath)
         imageFilePath = os.path.join(received_dirPath, imageFileName)
         received_file.save(imageFilePath)
-        print('图片文件保存到此路径：%s' % imageFilePath)
+        print('接收图片文件保存到此路径：%s' % imageFilePath)
         usedTime = time.time() - startTime
         print('接收图片并保存，总共耗时%.2f秒' % usedTime)
         # 对指定图片路径的图片做分类预测，并打印耗时，返回预测种类名称
         startTime = time.time()
         predict_className = predict_image(model, imageFilePath)
         usedTime = time.time() - startTime
-        print('完成对接收图片的分类预测，总共耗时%.2f秒' % usedTime)
+        print('完成对接收图片的分类预测，总共耗时%.2f秒\n' % usedTime)
         return jsonify(predict_className=predict_className)
 
 

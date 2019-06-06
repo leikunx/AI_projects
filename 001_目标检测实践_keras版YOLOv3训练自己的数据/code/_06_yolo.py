@@ -128,17 +128,17 @@ class YoloModel(object):
             right = min(image.size[0], np.floor(right + 0.5).astype('int32'))
             # 如果方框在图片中的位置过于靠上，调整文字区域
             if top - label_size[1] >= 0:
-                text_origin = np.array([left, top - label_size[1]])
+                text_region = np.array([left, top - label_size[1]])
             else:
-                text_origin = np.array([left, top + 1])
+                text_region = np.array([left, top + 1])
             # 方框厚度为多少，则画多少个矩形
             for j in range(thickness):
                 draw.rectangle([left + j, top + j, right - j, bottom - j],
                     outline=self.color_list[c])
             # 绘制方框中的文字
-            draw.rectangle([tuple(text_origin), tuple(text_origin + label_size)],
+            draw.rectangle([tuple(text_region), tuple(text_region + label_size)],
                 fill=self.color_list[c])
-            draw.text(text_origin, label, fill=(0, 0, 0), font=font)
+            draw.text(text_region, label, fill=(0, 0, 0), font=font)
             del draw
         # 打印检测图片使用的时间
         usedTime = time.time() - startTime

@@ -11,4 +11,5 @@
 
 ## 讲解视频资源
 * 本工程作者的讲解Mask-RCNN的视频，压缩文件`2018年4月28日讲解Mask-RCNN论文和实践.zip`
-* 链接: https://pan.baidu.com/s/1mSljYS4VtpxMpRwMGKo47Q 提取码: ksbf 
+* 链接: https://pan.baidu.com/s/1mSljYS4VtpxMpRwMGKo47Q 提取码: ksbf
+* bilibili网站在线观看链接： https://www.bilibili.com/video/av54479638/

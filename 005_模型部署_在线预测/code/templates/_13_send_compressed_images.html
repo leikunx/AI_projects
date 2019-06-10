@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>实现需求4.1</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                function get_imageBase64String(image, max_width=416, max_height=416){
+                    var origin_width = image.width;
+                    var origin_height = image.height;
+                    var target_width = origin_width;
+                    var target_height = origin_height;
+                    if (origin_width > max_width || origin_height > max_height){
+                        if (origin_width / origin_height > max_width / max_height){
+                            target_width = max_width;
+                            target_height = Math.round(origin_height * (max_width / origin_width));
+                            }
+                        else{
+                            target_height = max_height;
+                            target_width = Math.round(origin_width * (max_height / origin_height));
+                            }
+                        }
+                    var canvas = document.getElementById("canvas_1");
+                    var context = canvas.getContext("2d");
+                    canvas.width = target_width;
+                    canvas.height = target_height;
+                    context.drawImage(image, 0, 0, target_width, target_height);
+                    dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                    image_base64_string = dataUrl.replace("data:image/jpeg;base64,", "");
+                    return image_base64_string;
+                    }
+                $("input#image_file").change(function(){
+                    var file = $(this)[0].files[0];
+                    $("img#image_1").attr("src", URL.createObjectURL(file));
+                    }); 
+                $("button#button_1").click(function(){
+                    var image = document.getElementById("image_1");
+                    var image_base64_string = get_imageBase64String(image);
+                    var image_dataUrl = "data:image/jpeg;base64," + image_base64_string;
+                    $("img#image_2").attr("src", image_dataUrl);
+                    $.ajax({
+                        url: "/send_compressedImage",
+                        type: 'POST',
+                        data: {"image_base64_string": image_base64_string},
+                        dataType: "json",
+                        success: function(return_data){
+                            $("img#image_3").attr("src", "data:image/jpeg;base64," + return_data['image_base64_string'])
+                            },
+                        error: function(return_data){
+                            alert("上传失败!")
+                            }
+                        })   
+                    });
+                }); 
+        </script>
+    </head>
+    
+    <body>
+        <form id="upload_form" enctype="multipart/form-data">
+            <input type="file" name="input_image" id="image_file"/>
+        </form>
+        <div>
+            <p>原始图片</p>
+            <img src="" id="image_1"/>
+        </div>
+        <div>
+            <p>画布</p>
+            <canvas id="canvas_1" width="100" height="100"/>
+        </div>
+        <div>
+            <p>本地改变大小后的图片</p>
+            <form >
+            <img src="" id="image_2"/>
+        </div>
+        <div>
+            <p>服务端传回的图片</p>
+            <img src="" id="image_3"/>
+        </div>
+        <button type="button" id="button_1">上传图片</button>
+    </body>
+</html>

@@ -19,7 +19,7 @@
                         processData: false,
                         contentType: false,
                         success: function(return_data){
-                            $("img#image_2").attr("src", "data:image/jpeg;base64," + return_data['imageStream'])
+                            $("img#image_2").attr("src", "data:image/jpeg;base64," + return_data['image_base64_string'])
                             },
                         error: function(return_data){
                             alert("上传失败!")

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>图片修改大小</title>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            function draw_rectangle(context, x1, y1, x2, y2, color="red"){
+                context.beginPath();
+                context.lineWidth = "3";
+                context.strokeStyle = color;
+                rectangle_width = x2 - x1;
+                rectangle_height = y2 - y1;
+                context.rect(x1, y1, rectangle_width, rectangle_height);
+                context.stroke();
+                };
+            function fill_rectangle(context, x1, y1, x2, y2, color="red"){
+                context.fillStyle = color;
+                rectangle_width = x2 - x1;
+                rectangle_height = y2 - y1;
+                context.fillRect(x1, y1, rectangle_width, rectangle_height);
+                };
+            function draw_text(context, x1, y2, text_content, color="red"){
+                context.fillStyle = color;
+                context.font = "13px Georgia";
+                context.fillText(text_content, x1, y2)
+                };
+            $(document).ready(function(){
+                var canvas = document.getElementById("canvas_1");
+                var context = canvas.getContext("2d");
+                var image = document.getElementById("img_1");
+                image.onload = function() {
+                    context.drawImage(image, 0, 0, 416, 416);
+                    draw_rectangle(context, 180, 230, 240, 300, "blue");
+                    fill_rectangle(context, 180, 218, 230, 230, "blue");
+                    draw_text(context, 180, 230, "car 0.77", "red");
+                    }
+                });
+        </script>
+    </head>
+        
+    <body>
+        <p>原始的图片</p>
+        <img id ="img_1" src="../resources/images/015.jpg" width="416" height="416"/>
+        <p>画框后的图片</p>
+        <canvas id="canvas_1" width="416" height="416" />
+    </body>
+</html>

@@ -34,14 +34,14 @@ def get_secondFloat(timestamp):
 
  
 # 获取当前时间表示的字符串，精确到0.1毫秒    
-def get_timeStr():
+def get_timeString():
     now_timestamp = time.time()
     now_structTime = time.localtime(now_timestamp)
-    timeStr_pattern = '%Y%m%d_%H%M%S'
-    now_timeStr_1 = time.strftime(timeStr_pattern, now_structTime)
-    now_timeStr_2 = get_secondFloat(now_timestamp)
-    now_timeStr = now_timeStr_1 + now_timeStr_2
-    return now_timeStr
+    timeString_pattern = '%Y%m%d_%H%M%S'
+    now_timeString_1 = time.strftime(timeString_pattern, now_structTime)
+    now_timeString_2 = get_secondFloat(now_timestamp)
+    now_timeString = now_timeString_1 + now_timeString_2
+    return now_timeString
     
 
 # 获取使用YOLOv3算法做目标检测的结果
@@ -62,50 +62,55 @@ def get_detectResult(image):
     return box_ndarray, classId_ndarray, score_ndarray
      
 
-# 获取请求中的参数字典    
+# 获取请求中的参数字典 
+from urllib.parse import unquote   
 def get_dataDict(data):
     data_dict = {}
     for text in data.split('&'):
         key, value = text.split('=')
-        data_dict[key] = value
+        value_1 = unquote(value)
+        data_dict[key] = value_1
     return data_dict
 
 
-# '/'的回调函数
+# 网络请求'/'的回调函数
 @server.route('/')
 def index():
-    htmlFileName = '_11_yolov3.html'
-    return render_template(htmlFileName)    
+    htmlFileName = '_14_yolov3_3.html'
+    htmlFileContent = render_template(htmlFileName)
+    return htmlFileContent    
     
 
-# '/get_detectedResult'的回调函数
-from urllib.parse import unquote
+# 网络请求'/get_detectedResult'的回调函数
 @server.route('/get_detectionResult', methods=['POST']) 
-def anmname_you_like():
+def anyname_you_like():
     startTime = time.time()
-    post_data = request.get_data()
-    data = post_data.decode('utf-8')
+    data_bytes = request.get_data()
+    data = data_bytes.decode('utf-8')
     data_dict = get_dataDict(data)
-    if 'image_data' in data_dict:
+    if 'image_base64_string' in data_dict:
         # 保存接收的图片到指定文件夹
         received_dirPath = '../resources/received_images'
         if not os.path.isdir(received_dirPath):
             os.makedirs(received_dirPath)
-        timeStr = get_timeStr()
-        imageFileName = timeStr + '.jpg'
+        timeString = get_timeString()
+        imageFileName = timeString + '.jpg'
         imageFilePath = os.path.join(received_dirPath, imageFileName)
         try:
-            image_base64string = unquote(data_dict['image_data'])
-            image_base64bytes = image_base64string.encode('utf-8')
-            image_bytes = base64.b64decode(image_base64bytes)
+            image_base64_string = data_dict['image_base64_string']
+            image_base64_bytes = image_base64_string.encode('utf-8')
+            image_bytes = base64.b64decode(image_base64_bytes)
             with open(imageFilePath, 'wb') as file:
                 file.write(image_bytes)
             print('接收图片文件保存到此路径：%s' %imageFilePath)
             usedTime = time.time() - startTime
-            print('接收图片并保存，总共耗时%.2f秒\n' %usedTime)    
+            print('接收图片并保存，总共耗时%.2f秒' %usedTime)    
             # 通过图片路径读取图像数据，并对图像数据做目标检测
+            startTime = time.time()
             image = Image.open(imageFilePath)    
             box_ndarray, classId_ndarray, score_ndarray = get_detectResult(image)
+            usedTime = time.time() - startTime
+            print('打开接收的图片文件并做目标检测，总共耗时%.2f秒\n' %usedTime)
             # 把目标检测结果转化为json格式的字符串
             json_dict = {
                 'box_list' : box_ndarray.astype('int').tolist(),

@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, url_for, jsonify
 import base64
 
 
-# 实例化Flask服务对象，赋值给变量server
+# 实例化Flask对象
 server = Flask(
     __name__,
     static_folder="../resources/received_images"
@@ -15,14 +15,15 @@ server = Flask(
 server.jinja_env.auto_reload = True
 server.config['TEMPLATES_AUTO_RELOAD'] = True    
 
-# '/'的回调函数
+
+# 网络请求'/'的回调函数
 @server.route('/')
 def index():
     htmlFileName = '_09_test_static.html'
     return render_template(htmlFileName)
     
     
-# '/get_image'的回调函数，返回图片文件的url
+# 网络请求'/get_image'的回调函数，返回图片文件的url
 @server.route('/get_image', methods=['POST']) 
 def anmname_you_like():
     fileName = request.form['fileName']

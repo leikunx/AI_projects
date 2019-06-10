@@ -18,8 +18,6 @@ server = Flask(
 # 设置开启web服务后，如果更新html文件，可以使更新立即生效
 server.jinja_env.auto_reload = True
 server.config['TEMPLATES_AUTO_RELOAD'] = True
-
-
 # 实例化检测器对象
 detector = Detector(
     weights_h5FilePath='../resources/yolov3/yolov3_weights.h5',
@@ -37,7 +35,7 @@ def index():
     
 # '/get_drawedImage'的回调函数
 @server.route('/get_drawedImage', methods=['POST']) 
-def anmname_you_like():
+def anyname_you_like():
     startTime = time.time()
     received_file = request.files['input_image']
     imageFileName = received_file.filename

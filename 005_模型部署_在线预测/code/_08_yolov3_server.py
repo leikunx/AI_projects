@@ -6,42 +6,45 @@ import os
 from PIL import Image
 # 导入flask库
 from flask import Flask, render_template, request, jsonify
-server = Flask(__name__)
-# 设置开启web服务后，如果更新html文件，可以使更新立即生效
-server.jinja_env.auto_reload = True
-server.config['TEMPLATES_AUTO_RELOAD'] = True
 # 加载把图片文件转换为字符串的base64库
 import base64
 
 
+# 实例化Flask对象
+server = Flask(__name__)
+# 设置开启web服务后，如果更新html文件，可以使更新立即生效
+server.jinja_env.auto_reload = True
+server.config['TEMPLATES_AUTO_RELOAD'] = True
 # 实例化检测器对象
 detector = Detector(
     weights_h5FilePath='../resources/yolov3/yolov3_weights.h5',
     anchor_txtFilePath='../resources/yolov3/yolov3_anchors.txt',
     category_txtFilePath='../resources/yolov3/coco.names'
     )
+    
+    
 # 根据图片文件路径获取base64编码后内容
-def get_imageStream(imageFilePath):
+def get_imageBase64String(imageFilePath):
     if not os.path.exists(imageFilePath):
-        imageStream = ''
+        image_base64_string = ''
     else:
         with open(imageFilePath, 'rb') as file:
-            imageStream_bytes = file.read()
-            imageStream_base64_bytes = base64.b64encode(imageStream_bytes)
-            imageStream = imageStream_base64_bytes.decode('utf-8')  
-    return imageStream
+            image_bytes = file.read()
+        image_base64_bytes = base64.b64encode(image_bytes)
+        image_base64_string = image_base64_bytes.decode('utf-8')  
+    return image_base64_string
     
     
-# '/'的回调函数
+# 网络请求'/'的回调函数
 @server.route('/')
 def index():
     htmlFileName = '_08_yolov3.html'
     return render_template(htmlFileName)
     
     
-# '/get_drawedImage'的回调函数
+# 网络请求'/get_drawedImage'的回调函数
 @server.route('/get_drawedImage', methods=['POST']) 
-def anmname_you_like():
+def anyname_you_like():
     startTime = time.time()
     received_file = request.files['input_image']
     imageFileName = received_file.filename
@@ -62,8 +65,8 @@ def anmname_you_like():
         drawed_imageFileName = 'drawed_' + os.path.splitext(imageFileName)[0] + '.jpg'
         drawed_imageFilePath = os.path.join(received_dirPath, drawed_imageFileName)
         drawed_image.save(drawed_imageFilePath)
-        imageStream = get_imageStream(drawed_imageFilePath)
-        return jsonify(imageStream=imageStream)
+        image_base64_string = get_imageBase64String(drawed_imageFilePath)
+        return jsonify(image_base64_string=image_base64_string)
     
 
 # 主函数

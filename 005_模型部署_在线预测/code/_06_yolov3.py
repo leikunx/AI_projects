@@ -180,8 +180,4 @@ if __name__ == "__main__":
             # 使用cv2库显示已经画框的图片，cv2库图像数据矩阵第3维度的通道顺序是bgr
             drawed_image_ndarray = np.array(drawed_image)
             bgr_image_ndarray = drawed_image_ndarray[..., ::-1]
-            cv2_display(bgr_image_ndarray)
-            
-    
-         
-       
+            cv2_display(bgr_image_ndarray)    

@@ -1,0 +1,2 @@
+python _13_receive_compressed_image.py
+pause

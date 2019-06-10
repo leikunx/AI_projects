@@ -179,7 +179,7 @@ if __name__ == '__main__':
             imageFilePath = input_content.strip()
             resized_imageFilePath, resized_multiple = resize_image(imageFilePath)
             image_base64_string = get_imageBase64String(resized_imageFilePath)
-            data_dict = {'image_data' : image_base64_string}
+            data_dict = {'image_base64_string' : image_base64_string}
             # 调用request.post方法发起post请求，并接收返回结果
             response = requests.post(url, data=data_dict)
             # 处理返回的json格式数据，准备好传入get_drawedImageNdarray函数的参数

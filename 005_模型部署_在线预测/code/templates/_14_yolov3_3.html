@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>实现需求4.4</title>
+        <link rel="icon" href="data:;base64,=">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            var color_2dArray = [[255, 0, 0], [255, 19, 0], [255, 38, 0], [255, 57, 0], [255, 76, 0], [255, 95, 0], [255, 114, 0], [255, 133, 0], [255, 153, 0], [255, 172, 0], [255, 191, 0], [255, 210, 0], [255, 229, 0], [255, 248, 0], [242, 255, 0], [223, 255, 0], [203, 255, 0], [184, 255, 0], [165, 255, 0], [146, 255, 0], [127, 255, 0], [108, 255, 0], [89, 255, 0], [70, 255, 0], [51, 255, 0], [31, 255, 0], [12, 255, 0], [0, 255, 6], [0, 255, 25], [0, 255, 44], [0, 255, 63], [0, 255, 82], [0, 255, 102], [0, 255, 121], [0, 255, 140], [0, 255, 159], [0, 255, 178], [0, 255, 197], [0, 255, 216], [0, 255, 235], [0, 255, 255], [0, 235, 255], [0, 216, 255], [0, 197, 255], [0, 178, 255], [0, 159, 255], [0, 140, 255], [0, 121, 255], [0, 102, 255], [0, 82, 255], [0, 63, 255], [0, 44, 255], [0, 25, 255], [0, 6, 255], [12, 0, 255], [31, 0, 255], [50, 0, 255], [70, 0, 255], [89, 0, 255], [108, 0, 255], [127, 0, 255], [146, 0, 255], [165, 0, 255], [184, 0, 255], [204, 0, 255], [223, 0, 255], [242, 0, 255], [255, 0, 248], [255, 0, 229], [255, 0, 210], [255, 0, 191], [255, 0, 172], [255, 0, 152], [255, 0, 133], [255, 0, 114], [255, 0, 95], [255, 0, 76], [255, 0, 57], [255, 0, 38], [255, 0, 19]]
+            var className_1dArray = ['person', 'bicycle', 'car', 'motorbike', 'aeroplane', 'bus', 'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'sofa', 'pottedplant', 'bed', 'diningtable', 'toilet', 'tvmonitor', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+            function draw_rectangle(context, x1, y1, x2, y2, color="red"){
+                context.lineWidth = "3";
+                context.strokeStyle = color;
+                rectangle_width = x2 - x1;
+                rectangle_height = y2 - y1;
+                context.strokeRect(x1, y1, rectangle_width, rectangle_height);
+                };
+            function fill_rectangle(context, x1, y1, x2, y2, color="red"){
+                context.fillStyle = color;
+                rectangle_width = x2 - x1;
+                rectangle_height = y2 - y1;
+                context.fillRect(x1, y1, rectangle_width, rectangle_height);
+                };
+            function draw_text(context, x1, y2, text_content, color="red"){
+                context.fillStyle = color;
+                context.font = "12px Georgia";
+                context.fillText(text_content, x1, y2);
+                };
+            function draw_canvas(context, boxList_string, classIdList_string, scoreList_string, scale){
+                var box_1dArray = boxList_string.split(",");
+                var box_2dArray = new Array(box_1dArray.length / 4);
+                for (var i = 0; i < box_2dArray.length; i++){
+                    box_2dArray[i] = new Array();
+                    }
+                for (var i = 0; i < box_1dArray.length; i++){
+                    box_2dArray[parseInt(i / 4)][i % 4] = parseInt(box_1dArray[i] / scale);
+                    }
+                classId_1dArray = classIdList_string.split(",");
+                score_1dArray = scoreList_string.split(",");
+                for (var i = 0; i < classId_1dArray.length; i++){
+                    var box = box_2dArray[i];
+                    var classId = parseInt(classId_1dArray[i]);
+                    var score = score_1dArray[i];
+                    var color = color_2dArray[classId];
+                    var color_string = "rgb(" + color[0].toString() + "," + color[1].toString() + "," + color[2].toString() + ")"
+                    var className = className_1dArray[classId];
+                    var text_content = className + " " + score.substring(0,4);
+                    var [x1, y1, x2, y2] = box;
+                    draw_rectangle(context, x1, y1, x2, y2, color_string);
+                    if ($("input#checkbox_1").is(":checked")){
+                        var textRegion_x1 = x1;
+                        var textRegion_width = parseInt(text_content.length * 6.5);
+                        var textRegion_x2 = x1 + textRegion_width;
+                        var textRegion_height = 10
+                        if (y1 <= textRegion_height){
+                            var textRegion_y1 = y1;
+                            var textRegion_y2 = y1 + textRegion_height; 
+                            }
+                        else{
+                            var textRegion_y1 = y1 - textRegion_height;
+                            var textRegion_y2 = y1;
+                            }
+                           
+                        fill_rectangle(context, textRegion_x1, textRegion_y1, textRegion_x2, textRegion_y2, color_string);
+                        draw_text(context, textRegion_x1, textRegion_y2, text_content, "black");
+                        }
+                    };
+                }    
+            var boxList_string, classIdList_string, scoreList_string;
+            $(document).ready(function(){
+                function get_imageBase64String(image, max_width=416, max_height=416){
+                    var origin_width = image.width;
+                    var origin_height = image.height;
+                    var target_width = origin_width;
+                    var target_height = origin_height;
+                    if (origin_width > max_width || origin_height > max_height){
+                        if (origin_width / origin_height > max_width / max_height){
+                            target_width = max_width;
+                            scale = max_width / origin_width;
+                            target_height = Math.round(origin_height * scale);
+                            }
+                        else{
+                            target_height = max_height;
+                            scale = max_height / origin_height;
+                            target_width = Math.round(origin_width * scale);
+                            }
+                        }
+                    else {scale = 1;}
+                    var canvas = document.createElement("canvas");
+                    var context = canvas.getContext("2d");
+                    canvas.width = target_width;
+                    canvas.height = target_height;
+                    context.drawImage(image, 0, 0, target_width, target_height);
+                    dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                    image_base64_string = dataUrl.replace("data:image/jpeg;base64,", "");
+                    return [image_base64_string, scale];
+                    }
+                $("#image_file").change(function(){
+                    var file = $(this)[0].files[0];
+                    $("img#image_1").attr("src", URL.createObjectURL(file));
+                    var button = document.getElementById("button_1");    
+                    button.disabled = false;
+                    }); 
+                $("button#button_1").click(function(){
+                    var image = document.getElementById("image_1");
+                    var return_result = get_imageBase64String(image);
+                    var image_base64_string = return_result[0];
+                    var scale = return_result[1];
+                    $.ajax({
+                        url: "/get_detectionResult",
+                        type: 'POST',
+                        data: {"image_base64_string": image_base64_string},
+                        dataType: "json",
+                        success: function(return_data){
+                            var canvas = document.getElementById("canvas_1");
+                            var context = canvas.getContext("2d");
+                            canvas.width = image.width;
+                            canvas.height = image.height;
+                            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                            boxList_string = return_data['box_list'].toString();
+                            classIdList_string = return_data['classId_list'].toString();
+                            scoreList_string = return_data['score_list'].toString();
+                            draw_canvas(context, boxList_string, classIdList_string, scoreList_string, scale);
+                            },
+                        error: function(return_data){
+                            alert("上传失败!")
+                            }
+                        });
+                    var button = document.getElementById("button_1");    
+                    button.disabled = true;    
+                    });
+                $("input#checkbox_1").change(function(){
+                    var button = document.getElementById("button_1");
+                    if(button.disabled == true){
+                        var image = document.getElementById("image_1");
+                        var canvas = document.getElementById("canvas_1");
+                        var context = canvas.getContext("2d");
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        draw_canvas(context, boxList_string, classIdList_string, scoreList_string, scale);
+                        }
+                    });    
+                }); 
+        </script>
+    </head>
+    
+    <body>
+        <form id="upload_form" enctype="multipart/form-data">
+            <input type="file" name="input_image" id="image_file"/>
+        </form>
+        <div>
+            <p>原始图片</p>
+            <img src="" id="image_1"/>
+        </div>
+        <div>
+            <p>目标检测结果图   
+                <input type="checkbox" checked="" id="checkbox_1"/>是否显示种类名称和概率
+            </p>
+            <canvas id="canvas_1"/>
+        </div>
+        <button type="button" id="button_1" disabled="disabled">上传图片并检测</button>
+    </body>
+</html>

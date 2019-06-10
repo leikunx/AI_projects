@@ -75,13 +75,25 @@ def get_colorList(category_quantity):
     color_list = [tuple([int(x * 255) for x in k]) for k in colorFloat_list]
     return color_list
     
+
+# 从文本文件中解析出物体种类列表category_list，要求每个种类占一行
+def get_categoryList(category_txtFilePath):
+    with open(category_txtFilePath, 'r', encoding='utf8') as file:
+        fileContent = file.read()
+    line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
+    category_list = line_list
+    return category_list 
+
     
 # 获取绘制检测效果之后的图片
 from PIL import Image, ImageDraw, ImageFont    
 def get_drawedImageNdarray(image, box_list,  
-                    classId_list, score_list, category_list,
+                    classId_list, score_list, category_list=None,
                     show_bbox=True, show_class=True, 
                     show_score=True, show_instanceQuantity=True):
+    if category_list == None:
+        category_txtFilePath = '../resources/yolov3/coco.names'
+        category_list = get_categoryList(category_txtFilePath)
     # 复制原图像数据，赋值给表示绘画图像数据的变量drawed_image，这样可以避免修改原图像数据
     drawed_image = image.copy()
     # 获取图像的宽、高
@@ -154,15 +166,6 @@ def get_drawedImageNdarray(image, box_list,
             imageDraw.text(textRegion_leftTop, text, textColor, font=font)
     return drawed_image
  
- 
-# 从文本文件中解析出物体种类列表category_list，要求每个种类占一行
-def get_categoryList(category_txtFilePath):
-    with open(category_txtFilePath, 'r', encoding='utf8') as file:
-        fileContent = file.read()
-    line_list = [k.strip() for k in fileContent.split('\n') if k.strip()!='']
-    category_list = line_list
-    return category_list 
-    
     
 # 主函数    
 if __name__ == '__main__':
@@ -189,15 +192,12 @@ if __name__ == '__main__':
             box_list = box_ndarray.astype('int').tolist()
             classId_list = responseJson_dict['classId_list']
             score_list = responseJson_dict['score_list']
-            category_txtFilePath = '../resources/yolov3/coco.names'
-            category_list = get_categoryList(category_txtFilePath)
             # 根据目标检测结果获取画框图像数据
             drawed_image = get_drawedImageNdarray(
                 image,
                 box_list,
                 classId_list,
-                score_list,
-                category_list
+                score_list
                 )
             rgb_image_ndarray = np.array(drawed_image)    
             bgr_image_ndarray = rgb_image_ndarray[..., ::-1]

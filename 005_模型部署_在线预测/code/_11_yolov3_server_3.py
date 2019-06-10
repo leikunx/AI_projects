@@ -10,7 +10,8 @@ from flask import Flask, render_template, request, jsonify
 # 加载把图片文件转换为字符串的base64库
 import base64
 from yolo3.utils import letterbox_image
-
+# 导入代码文件_12_yolov3_client_3.py中的画图方法
+from _12_yolov3_client_3 import get_drawedImageNdarray
 
 # 实例化Flask服务对象，赋值给变量server
 server = Flask(__name__)
@@ -111,6 +112,8 @@ def anyname_you_like():
             box_ndarray, classId_ndarray, score_ndarray = get_detectResult(image)
             usedTime = time.time() - startTime
             print('打开接收的图片文件并做目标检测，总共耗时%.2f秒\n' %usedTime)
+            # 把目标检测结果图保存在服务端指定路径
+            
             # 把目标检测结果转化为json格式的字符串
             json_dict = {
                 'box_list' : box_ndarray.astype('int').tolist(),

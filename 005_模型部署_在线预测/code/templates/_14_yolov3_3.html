@@ -49,7 +49,7 @@
                     draw_rectangle(context, x1, y1, x2, y2, color_string);
                     if ($("input#checkbox_1").is(":checked")){
                         var textRegion_x1 = x1;
-                        var textRegion_width = parseInt(text_content.length * 6.5);
+                        var textRegion_width = parseInt(text_content.length * 6);
                         var textRegion_x2 = x1 + textRegion_width;
                         var textRegion_height = 10
                         if (y1 <= textRegion_height){
@@ -148,6 +148,8 @@
         <form id="upload_form" enctype="multipart/form-data">
             <input type="file" name="input_image" id="image_file"/>
         </form>
+        <p>选择图片文件后，才可以点击按钮"上传图片并检测"</p>
+        <button type="button" id="button_1" disabled="disabled" style="">上传图片并检测</button>
         <div>
             <p>原始图片</p>
             <img src="" id="image_1"/>
@@ -158,6 +160,5 @@
             </p>
             <canvas id="canvas_1"/>
         </div>
-        <button type="button" id="button_1" disabled="disabled">上传图片并检测</button>
     </body>
 </html>

@@ -87,7 +87,7 @@ def get_categoryList(category_txtFilePath):
     
 # 获取绘制检测效果之后的图片
 from PIL import Image, ImageDraw, ImageFont    
-def get_drawedImageNdarray(image, box_list,  
+def get_drawedImage(image, box_list,  
                     classId_list, score_list, category_list=None,
                     show_bbox=True, show_class=True, 
                     show_score=True, show_instanceQuantity=True):
@@ -193,7 +193,7 @@ if __name__ == '__main__':
             classId_list = responseJson_dict['classId_list']
             score_list = responseJson_dict['score_list']
             # 根据目标检测结果获取画框图像数据
-            drawed_image = get_drawedImageNdarray(
+            drawed_image = get_drawedImage(
                 image,
                 box_list,
                 classId_list,

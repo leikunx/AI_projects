@@ -60,7 +60,6 @@
                             var textRegion_y1 = y1 - textRegion_height;
                             var textRegion_y2 = y1;
                             }
-                           
                         fill_rectangle(context, textRegion_x1, textRegion_y1, textRegion_x2, textRegion_y2, color_string);
                         draw_text(context, textRegion_x1, textRegion_y2, text_content, "black");
                         }
@@ -68,29 +67,36 @@
                 }    
             var boxList_string, classIdList_string, scoreList_string;
             $(document).ready(function(){
-                function get_imageBase64String(image, max_width=416, max_height=416){
-                    var origin_width = image.width;
-                    var origin_height = image.height;
-                    var target_width = origin_width;
-                    var target_height = origin_height;
-                    if (origin_width > max_width || origin_height > max_height){
-                        if (origin_width / origin_height > max_width / max_height){
-                            target_width = max_width;
-                            scale = max_width / origin_width;
-                            target_height = Math.round(origin_height * scale);
+                function get_reducedImageSize(old_width, old_height, max_width, max_height){
+                    var new_width, new_height;
+                    if (old_width > max_width || old_height > max_height){
+                        if (old_width / old_height > max_width / max_height){
+                            new_width = max_width;
+                            scale = max_width / old_width;
+                            new_height = Math.round(old_height * scale);
                             }
                         else{
-                            target_height = max_height;
-                            scale = max_height / origin_height;
-                            target_width = Math.round(origin_width * scale);
+                            new_height = max_height;
+                            scale = max_height / old_height;
+                            new_width = Math.round(old_width * scale);
                             }
                         }
-                    else {scale = 1;}
+                    else {
+                        new_width = old_width;
+                        new_height = old_height;
+                        scale = 1;
+                        }
+                    return [new_width, new_height, scale]
+                    }
+                function get_imageBase64String(image, max_width=416, max_height=416){
+                    var image_width = image.width;
+                    var image_height = image.height;
+                    var [new_width, new_height, scale] = get_reducedImageSize(image_width, image_height, max_width, max_height);
                     var canvas = document.createElement("canvas");
                     var context = canvas.getContext("2d");
-                    canvas.width = target_width;
-                    canvas.height = target_height;
-                    context.drawImage(image, 0, 0, target_width, target_height);
+                    canvas.width = new_width;
+                    canvas.height = new_height;
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
                     dataUrl = canvas.toDataURL('image/jpeg', 0.95);
                     image_base64_string = dataUrl.replace("data:image/jpeg;base64,", "");
                     return [image_base64_string, scale];
@@ -98,14 +104,22 @@
                 $("#image_file").change(function(){
                     var file = $(this)[0].files[0];
                     $("img#image_1").attr("src", URL.createObjectURL(file));
+                    var image = document.getElementById("image_1");
+                    image.onload = function(){
+                        old_width = image.naturalWidth;
+                        old_height = image.naturalHeight;
+                        max_width = 640;
+                        max_height = 640;
+                        var [new_width, new_height, scale] = get_reducedImageSize(old_width, old_height, max_width, max_height);
+                        image.width = new_width;
+                        image.height = new_height;
+                        };
                     var button = document.getElementById("button_1");    
                     button.disabled = false;
                     }); 
                 $("button#button_1").click(function(){
                     var image = document.getElementById("image_1");
-                    var return_result = get_imageBase64String(image);
-                    var image_base64_string = return_result[0];
-                    var scale = return_result[1];
+                    var [image_base64_string, scale] = get_imageBase64String(image);
                     $.ajax({
                         url: "/get_detectionResult",
                         type: 'POST',

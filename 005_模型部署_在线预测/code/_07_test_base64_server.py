@@ -30,6 +30,7 @@ def get_imageBase64String(imageFilePath):
 def index():
     htmlFileName = '_07_test_base64.html'
     htmlFileContent = render_template(htmlFileName)
+    print(htmlFileContent)
     return htmlFileContent
     
     

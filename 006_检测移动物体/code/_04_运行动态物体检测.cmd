@@ -1,0 +1,2 @@
+python _04_motion_detection.py
+pause

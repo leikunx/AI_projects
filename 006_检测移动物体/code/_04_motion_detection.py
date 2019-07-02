@@ -52,7 +52,7 @@ def get_drawedDetectedImage(first_image_ndarray, second_image_ndarray):
             thickness = 2
             cv2.rectangle(copy_image_ndarray, leftTop_coordinate, rightBottom_coordinate, bgr_color, thickness)
             time_string = get_timeString()
-            text = '在时刻%s 发现运动物体! x=%d, y=%d' %(time_string, x1, y1)
+            text = '在时刻%s 发现移动物体! x=%d, y=%d' %(time_string, x1, y1)
             print(text)
     time_string = get_timeString()
     bgr_color = (0, 0, 255)
@@ -83,6 +83,6 @@ if __name__ == '__main__':
             cv2.destroyAllWindows()  
             break
         # 随着时间推移，当前帧作为下一帧的前一帧
-        first_image_ndarray = second_image_ndarray    
+        first_image_ndarray = second_image_ndarray   
     # 关闭相机
     camera.release()

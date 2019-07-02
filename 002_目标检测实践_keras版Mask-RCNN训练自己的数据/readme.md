@@ -111,7 +111,7 @@
 * cmd文件双击即可运行，运行效果如下图所示：
 ![使用07命令脚本文件效果截图](markdown_images/09.gif)
 * 如何安装并使用ffmpeg，请查看我的这篇文章：《[视频压缩工具ffmpeg的使用](https://www.jianshu.com/p/4f660bd805f3)》
-* 使用ffmpeg从avi视频文件`resources/detect_result_1.avi`中截取3秒制作git动画文件`09.git`
+* 使用ffmpeg从avi视频文件`resources/detect_result_1.avi`中截取3秒制作git动画文件`09.gif`
 * 在文件夹`resources`中打开cmd，cmd中运行命令：`ffmpeg -ss 00:00:30 -t 3 -i detect_result_1.avi 09.gif`
 * cmd中运行结果如下图所示，红色箭头标记处表示读者需要注意cmd所在路径，红色下划线表示cmd中命令内容。
 ![avi视频转git动画结果截图](markdown_images/10.jpg)

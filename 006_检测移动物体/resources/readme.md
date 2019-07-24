@@ -12,4 +12,3 @@
 ## 讲解视频资源
 * 视频文件《2019年7月1日讲解如何检测移动物体.avi》
 * 百度云盘下载链接: https://pan.baidu.com/s/1KgxjjsSREvxmaaD0ATBWXw 提取码: n16c
-* bilibili网站在线观看链接：

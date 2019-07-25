@@ -105,7 +105,7 @@ class FaceRecognizer(object):
         print('人脸数据库中总共有%d个人, %d个人脸图像' %(self.person_quantity, self.image_quantity))
         # 加载人脸图像数据，转换为向量
         startTime = time.time()
-        batch_size = 1
+        batch_size = 30
         imageData_list = []
         count = 0
         self.database_2d_array = np.empty((self.image_quantity, self.feature_dimension))
@@ -119,12 +119,13 @@ class FaceRecognizer(object):
                 if fileSuffix in self.fileSuffix_set:
                     filePath = os.path.join(dirPath, fileName)
                     image_3d_array = np.array(Image.open(filePath))
+                    image_3d_array = cv2.resize(image_3d_array, (112, 112))
                     imageData_list.append(image_3d_array)
                     count += 1
                     if count % batch_size == 0:
-                        image_4d_array = np.array(imageData_list)
-                        imageData_list.clear()
+                        image_4d_array = np.array(imageData_list)   
                         self.database_2d_array[count-batch_size: count] = self.face_vectorizer.get_feature_2d_array(image_4d_array)
+                        imageData_list.clear()
         if count % batch_size != 0:
             image_4d_array = np.array(imageData_list)
             remainder = count % batch_size

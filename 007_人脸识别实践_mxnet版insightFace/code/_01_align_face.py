@@ -96,7 +96,7 @@ def get_affine_image_3d_array(original_image_3d_array, box_1d_array, point_1d_ar
     affine_image_3d_array = cv2.warpAffine(clipped_image_3d_array, 
         affine_matrix, clipped_image_size)
     affine_image_3d_array_1 = cv2.resize(affine_image_3d_array, new_size)
-    return affine_image_3d_array
+    return affine_image_3d_array_1
 
 
 # 解析代码文件运行时传入的参数，argument中文叫做参数            

@@ -4,7 +4,6 @@ import os
 import cv2
 from PIL import Image
 import time
-import sys
 # 加载mxnet库
 import mxnet as mx
 import mxnet.ndarray as nd

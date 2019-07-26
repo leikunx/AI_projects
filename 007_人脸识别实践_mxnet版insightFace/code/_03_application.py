@@ -263,5 +263,7 @@ if __name__ == '__main__':
         # 按Esc键或者q键退出    
         pressKey = cv2.waitKey(10)
         if 27 == pressKey or ord('q') == pressKey:
+            face_recognizer.process.terminate() 
             cv2.destroyAllWindows()
+            videoWriter.release()
             sys.exit()      

@@ -60,3 +60,12 @@
 * 建议读者阅读代码文件`_02_demo.py`，代码中变量命名具有实际意义，易于读者理解，在关键处均含有注释。
 * 程序运行完成后，文件夹`resources`中新增文件夹`affine_faces`和视频文件`demo.avi`，如下图所示：
 ![文件夹截图_2](markdown_images/05.jpg)
+
+## 3.代码文件说明
+代码文件`_03_application.py`与代码文件`_02_demo.py`大体上功能相同，区别有以下3点：
+1. 代码文件`_03_application.py`使用代码文件`FaceRecognizer_2.py`中的类`FaceRecognizer`,
+    * 代码文件`_02_demo.py`使用代码文件`FaceRecognizer.py`中的类`FaceRecognizer`。
+2. 代码文件`_03_application.py`实现功能：当添加新人进入人脸数据库时，不再需要重新打开程序。
+    * 后台使用多进程更新人脸数据库，通过管道共享变量将人脸数据库的值在多进程之间传递。
+3. 假设人脸数据库有20000张图片，代码文件`_02_demo.py`每次运行需要重新加载数据库，
+    * 代码文件`_03_application.py`不需要重新加载数据库，而是加载pickle文件，节省时间。

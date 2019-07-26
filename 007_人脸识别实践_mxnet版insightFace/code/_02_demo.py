@@ -44,7 +44,7 @@ def get_new_box(box, margin, image_size):
     return new_box    
     
     
-# 定义人脸检测类FaceDetection
+# 定义人脸检测类FaceDetector
 class FaceDetector(object):
     # 实例化对象后的初始化方法
     def __init__(self, model_dirPath = '../resources/mtcnn_model'):
@@ -106,12 +106,12 @@ def get_affine_image_3d_array(original_image_3d_array, box_1d_array, point_1d_ar
     clipped_image_size = (clipped_image_width, clipped_image_height)
     affine_image_3d_array = cv2.warpAffine(clipped_image_3d_array, affine_matrix, clipped_image_size)
     affine_image_3d_array_1 = cv2.resize(affine_image_3d_array, new_size)
-    return affine_image_3d_array
+    return affine_image_3d_array_1
     
 
 # 获取人名列表
 last_saveTime = time.time()
-def get_personName_list(image_3d_array, box_2d_array, point_2d_array):
+def get_personName_list(image_3d_array, box_2d_array, point_2d_array, distance_method='euclidean'):
     global last_saveTime
     assert box_2d_array.shape[0] == point_2d_array.shape[0]
     personName_list = []
@@ -161,8 +161,9 @@ def get_drawed_image_3d_array(image_3d_array, box_2d_array, personName_list, poi
                 text = personName_list[index]
                 image = Image.fromarray(image_3d_array)
                 imageDraw = ImageDraw.Draw(image)
+                font_filePath = 'C:/Windows/Fonts/STLITI.TTF'
                 fontSize = math.ceil((image_width + image_height) / 35)
-                font = ImageFont.truetype('C:/Windows/Font/STLITI.TTF', fontSize, encoding='utf-8')
+                font = ImageFont.truetype(font_filePath, fontSize, encoding='utf-8')
                 textRegionLeftTop = (x1+5, y1)
                 color = (255, 0, 0)
                 imageDraw.text(textRegionLeftTop, text, color, font=font)
@@ -180,15 +181,16 @@ def get_drawed_image_3d_array(image_3d_array, box_2d_array, personName_list, poi
         text = '此图片中总共检测出的人脸数量：%d' %person_quantity
         image = Image.fromarray(image_3d_array)
         imageDraw = ImageDraw.Draw(image)
+        font_filePath = 'C:/Windows/Fonts/STLITI.TTF'
         fontSize = math.ceil((image_width + image_height) / 50)
         # 字体文件在Windows10系统可以找到此路径，在Ubuntu系统需要更改路径
-        font = ImageFont.truetype('C:/Windows/Font/STLITI.TTF', fontSize, encoding='utf-8')
+        font = ImageFont.truetype(font_filePath, fontSize, encoding='utf-8')
         textRegionLeftTop = (20, 20)
         imageDraw.text(textRegionLeftTop, text, (34, 139, 34), font=font)
         image_3d_array = np.array(image)
     return image_3d_array       
-    
-    
+
+        
 # 解析代码文件运行时传入的参数，argument中文叫做参数            
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -196,6 +198,7 @@ def parse_args():
     parser.add_argument('--show_personQuantity', action='store_true', default=True)
     parser.add_argument('--video_aviFilePath', default=None)
     parser.add_argument('--margin', type=int, default=8)
+    parser.add_argument('--distance_method', type=str, default='euclidean')
     argument_namespace = parser.parse_args()
     return argument_namespace          
         
@@ -208,6 +211,10 @@ if __name__ == '__main__':
     show_personQuantity = argument_namespace.show_personQuantity
     video_aviFilePath = argument_namespace.video_aviFilePath
     margin = argument_namespace.margin
+    distance_method = argument_namespace.distance_method
+    distance_method_list = ['euclidean', 'cosine']
+    assert distance_method in distance_method_list, 'distance_method must be in %s' %(
+        ' or'.join(distance_method_list))
     # 实例化相机对象
     cameraIndex = 0
     camera = cv2.VideoCapture(cameraIndex)
@@ -218,11 +225,12 @@ if __name__ == '__main__':
         from FaceRecognizer import FaceRecognizer
         print('成功加载人脸识别类FaceRecognizer')
         face_detector = FaceDetector()
-        face_recognizer = FaceRecognizer()
+        face_recognizer = FaceRecognizer(distance_method=distance_method)
         print('成功实例化人脸检测对象、人脸识别对象')
     else:
         print('未成功调用相机，请检查相机是否已连接电脑')
         sys.exit()
+    # 实例视频流写入对象
     if video_aviFilePath != None:
         fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', '2')
         image_height, image_width, _ = image_3d_array.shape
@@ -258,8 +266,7 @@ if __name__ == '__main__':
         pressKey = cv2.waitKey(10)
         if 27 == pressKey or ord('q') == pressKey:
             cv2.destroyAllWindows()
-            sys.exit()
-    print('人脸剪裁及对齐程序运行完成！！')        
+            sys.exit()      
         
             
         

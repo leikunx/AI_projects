@@ -76,12 +76,29 @@ def get_accuracy(distance_1d_array, actual_isSame_1d_array, threshold):
     accuracy = float(true_positive_quantity+true_negetive_quantity) / len(distance_1d_array)
     return accuracy
 
+
+# 获取2个特征2维数组间的距离
+import math
+def get_distance_1d_array(feature_2d_array_1, feature_2d_array_2, distance_method='euclidean'):
+    # 计算欧几里得距离
+    if distance_method == 'euclidean':
+        diffValue_2d_array = np.subtract(feature_2d_array_1, feature_2d_array_2)
+        distance_1d_array = np.sum(np.square(diffValue_2d_array),1)
+    # 计算余弦相似度    
+    elif distance_method == 'cosine':
+        numerator_1d_array  = np.sum(np.multiply(feature_2d_array_1, feature_2d_array_2), axis=1)
+        denominator_1d_array = np.linalg.norm(feature_2d_array_1, axis=1) * np.linalg.norm(feature_2d_array_2, axis=1)
+        similarity_1d_array = numerator_1d_array / denominator_1d_array
+        distance_1d_array = np.arccos(similarity_1d_array) / math.pi
+    return distance_1d_array    
+
     
 # 定义类 人脸识别器FaceRecognizer
 class FaceRecognizer(object):
     # 实例化对象后的初始化方法
-    def __init__(self, face_dirPath='../resources/face_database'):
+    def __init__(self, face_dirPath='../resources/face_database', distance_method='euclidean'):
         self.feature_dimension = 512
+        self.distance_method = distance_method
         self.face_vectorizer = FaceVectorizer()
         self.fileSuffix_set = set(['jpg', 'bmp', 'png'])
         self.load_database(face_dirPath)
@@ -151,7 +168,7 @@ class FaceRecognizer(object):
             test_distance_1d_array = self.distance_1d_array[test_1d_array]
             test_isSame_1d_array = self.isSame_1d_array[test_1d_array]
             accuracy_list = []
-            threshold_1d_array = np.arange(0.5, 2.5, 0.01)
+            threshold_1d_array = np.arange(0, 2.0, 0.01)
             for threshold in threshold_1d_array:
                 train_accuracy = get_accuracy(train_distance_1d_array, train_isSame_1d_array, threshold)
                 test_accuracy = get_accuracy(test_distance_1d_array, test_isSame_1d_array, threshold)
@@ -202,8 +219,7 @@ class FaceRecognizer(object):
         usedTime = time.time() - startTime
         print('随机生成数据集，总共%d组人脸，用时%.2f秒' %(sample_quantity, usedTime))
         # 得出2个特征2维数组间的距离
-        diffValue_2d_array = np.subtract(feature_2d_array_1, feature_2d_array_2)
-        self.distance_1d_array = np.sum(np.square(diffValue_2d_array), 1)
+        self.distance_1d_array = get_distance_1d_array(feature_2d_array_1, feature_2d_array_2, self.distance_method)
     
     # 获取人脸对应的人名
     def get_personName(self, imageFilePath):
@@ -220,8 +236,7 @@ class FaceRecognizer(object):
         else:
             raise ValueError('传入图像数据的维度既不是3维也不是4维')
         feature_2d_array = self.face_vectorizer.get_feature_2d_array(image_4d_array)
-        diffValue_2d_array = np.subtract(self.database_2d_array, feature_2d_array)
-        distance_1d_array = np.sum(np.square(diffValue_2d_array), 1) 
+        distance_1d_array = get_distance_1d_array(self.database_2d_array, feature_2d_array, self.distance_method)
         isSame_1d_array = np.less(distance_1d_array, self.bestThreshold)
         predict_personId_1d_array = self.personId_1d_array[isSame_1d_array]
         if len(predict_personId_1d_array) == 0:
@@ -231,7 +246,7 @@ class FaceRecognizer(object):
             similar_personId = self.personId_1d_array[min_distance_index]
             predict_bincount_1d_array = np.bincount(predict_personId_1d_array)
             similar_percent = predict_bincount_1d_array[similar_personId] / self.bincount_1d_array[similar_personId]
-            if similar_percent >= 0.5:
+            if similar_percent >= 0.7:
                 personName = self.personName_list[similar_personId]
             else:
                 personName = '无效人脸'

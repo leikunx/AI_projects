@@ -14,12 +14,12 @@
 ![文本分类效果结果图](markdown_images/02.png)
 
 # 0.编程环境
-操作系统：Windows10
-python版本: 3.6
-开发环境：jupyter notebook
-tensorflow_gpu版本：1.13.1(读者根据自己的CUDA版本可以自行选择)
-内存要求：8G
-显存要求：2G
+* 操作系统：Windows10
+* python版本: 3.6
+* 开发环境：jupyter notebook
+* tensorflow_gpu版本：1.13.1(读者根据自己的CUDA版本可以自行选择)
+* 内存要求：8G
+* 显存要求：2G
 
 # 1.致谢声明
 本文学习`gaussic`的github工程《[使用卷积神经网络以及循环神经网络进行中文文本分类](https://github.com/gaussic/text-classification-cnn-rnn)》

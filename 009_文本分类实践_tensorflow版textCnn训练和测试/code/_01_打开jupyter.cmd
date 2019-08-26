@@ -1,0 +1,1 @@
+jupyter notebook "_01_textCnn.ipynb"

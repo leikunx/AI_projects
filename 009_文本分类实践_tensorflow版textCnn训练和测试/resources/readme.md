@@ -3,7 +3,7 @@
 
 ## 下载链接
 * 读者需要在百度云盘下载压缩文件`009_resources.zip`
-* 
+* 链接: https://pan.baidu.com/s/1uv7wGXwUWYLmlgEwrM5CFQ 提取码: 6usk
 
 ## 解压后示意图
 压缩文件解压后，文件夹`resources`中应该如下图所示：

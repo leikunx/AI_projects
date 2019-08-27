@@ -25,7 +25,7 @@ def index():
     
 # 网络请求'/get_image'的回调函数，返回图片文件的url
 @server.route('/get_image', methods=['POST']) 
-def anmname_you_like():
+def anyname_you_like():
     fileName = request.form['fileName']
     image_source_url = url_for('static', filename=fileName)
     print("此图片文件的url为：%s\n" %image_source_url)

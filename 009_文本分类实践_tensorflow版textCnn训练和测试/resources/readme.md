@@ -9,3 +9,7 @@
 压缩文件解压后，文件夹`resources`中应该如下图所示：
 ![资源文件夹下载后示意图](../markdown_images/01.jpg)
 
+## 讲解视频资源
+* 视频文件《2019年8月27日讲解python多线程和文本分类工程》
+* 百度云盘下载链接: https://pan.baidu.com/s/1_yRsGAUv7tzwBQVYIChlCw 提取码: 53wt
+* bilibili网站在线观看链接：https://www.bilibili.com/video/av65643509

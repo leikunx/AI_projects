@@ -77,17 +77,17 @@
 ```    
 
 本人写过图像相关较高质量博客文章列举：
-    * 1. [目标检测实践_keras版Mask-RCNN训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/002_目标检测实践_keras版Mask-RCNN训练自己的数据)
-    * 2. [目标检测实践_Keras版YOLOv3训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/001_目标检测实践_keras版YOLOv3训练自己的数据)
-    * 3. [目标检测实践_keras版RetinaNet训练自己的数据](https://www.jianshu.com/p/64852a68055f)
-    * 4. [目标检测实践_tensorflow版SSD数据准备](https://www.jianshu.com/p/3d9436b4cb66)
-    * 5. [目标检测实践_tensorflow版SSD训练自己的数据](https://www.jianshu.com/p/0e5f9df4686a)
-    * 6. [在谷歌云服务器上搭建深度学习平台](https://www.jianshu.com/p/893d622d1b5a)，阅读量超过17000
-    * 7. [视频压缩工具ffmpeg的使用](https://www.jianshu.com/p/4f660bd805f3)
-    * 8. [004_复写代码_keras版ResNet](https://github.com/StevenLei2017/AI_projects/tree/master/004_复写代码_keras版ResNet)
-    * 9. [007_人脸识别实践_mxnet版insightFace](https://github.com/StevenLei2017/AI_projects/tree/master/007_人脸识别实践_mxnet版insightFace)
-    * 10.[010_复写代码_pytorch版关键点的目标检测](https://github.com/StevenLei2017/AI_projects/tree/master/010_复写代码_pytorch版关键点的目标检测)
-本项总计得分20分
+1. [目标检测实践_keras版Mask-RCNN训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/002_目标检测实践_keras版Mask-RCNN训练自己的数据)
+2. [目标检测实践_Keras版YOLOv3训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/001_目标检测实践_keras版YOLOv3训练自己的数据)
+3. [目标检测实践_keras版RetinaNet训练自己的数据](https://www.jianshu.com/p/64852a68055f)
+4. [目标检测实践_tensorflow版SSD数据准备](https://www.jianshu.com/p/3d9436b4cb66)
+5. [目标检测实践_tensorflow版SSD训练自己的数据](https://www.jianshu.com/p/0e5f9df4686a)
+6. [在谷歌云服务器上搭建深度学习平台](https://www.jianshu.com/p/893d622d1b5a)，阅读量超过17000
+7. [视频压缩工具ffmpeg的使用](https://www.jianshu.com/p/4f660bd805f3)
+8. [004_复写代码_keras版ResNet](https://github.com/StevenLei2017/AI_projects/tree/master/004_复写代码_keras版ResNet)
+9. [007_人脸识别实践_mxnet版insightFace](https://github.com/StevenLei2017/AI_projects/tree/master/007_人脸识别实践_mxnet版insightFace)
+10. [010_复写代码_pytorch版关键点的目标检测](https://github.com/StevenLei2017/AI_projects/tree/master/010_复写代码_pytorch版关键点的目标检测)
+* 本项总计得分20分
 
     
 ### 1.5 其他相关，总分20分，超过20分按20分计。

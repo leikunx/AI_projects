@@ -75,6 +75,7 @@
     2 因为本文作者水平未达写论文水准，顶会论文计20分，其他论文酌情计15分或10分。
     3 能够体现作者水平的较高质量博客文章，每篇计2分。
 ```    
+
 本人写过图像相关较高质量博客文章列举：
     * 1. [目标检测实践_keras版Mask-RCNN训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/002_目标检测实践_keras版Mask-RCNN训练自己的数据)
     * 2. [目标检测实践_Keras版YOLOv3训练自己的数据](https://github.com/StevenLei2017/AI_Projects/tree/master/001_目标检测实践_keras版YOLOv3训练自己的数据)

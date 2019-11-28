@@ -40,7 +40,7 @@
 ```
 
 4. 刚入门深度学习(想做图像识别)，如何逐步提高自己?
-查看博主的文章: 《[人工智能图像识别从业人员考核标准](https://github.com/StevenLei2017/AI_projects/tree/master/003_人工智能图像识别领域从业人员的考核标准)》
+* 查看博主的文章: 《[人工智能图像识别从业人员考核标准](https://github.com/StevenLei2017/AI_projects/tree/master/003_人工智能图像识别领域从业人员的考核标准)》
 
 5. 本文知识点列举
 ```
